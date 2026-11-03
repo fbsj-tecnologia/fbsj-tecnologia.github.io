@@ -525,7 +525,7 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
    }
    if(kind==='edit'){
     const values=[...row.querySelectorAll('td')].slice(0,-1).map(td=>td.textContent.trim());
-    showRecordModal(screen,'Editar cadastro',editorContent(values),row);return;
+    showRecordModal(screen,'Editar cadastro',editorContent(screen,values),row);return;
    }
    if(kind==='delete'){
     row.remove();feedback.textContent='Cadastro excluído desta demonstração.';return;
