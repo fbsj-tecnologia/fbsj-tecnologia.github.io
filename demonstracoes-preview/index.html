@@ -573,6 +573,41 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  color-scheme:dark!important;
 }
 
+
+/* Controle de tema no cabeçalho somente enquanto a demonstração estiver expandida. */
+.prototype-theme-toggle.in-site-header{
+ position:static!important;top:auto!important;right:auto!important;z-index:auto!important;
+ min-height:46px;padding:0 16px;border-radius:999px;font-size:12px;
+ box-shadow:none;flex:0 0 auto;
+}
+.site-header .header-right{display:flex;align-items:center;justify-content:flex-end;gap:12px}
+.site-header .header-right .prototype-theme-toggle.in-site-header{display:inline-flex}
+@media(max-width:760px){
+ .prototype-theme-toggle.in-site-header{min-height:40px;padding:0 10px;font-size:10px}
+ .site-header .header-right{gap:7px}
+}
+@media(max-width:420px){
+ .prototype-theme-toggle.in-site-header{min-height:36px;padding:0 8px;font-size:9px}
+ .prototype-theme-toggle.in-site-header .theme-icon{font-size:12px}
+}
+/* No modo reduzido, afasta o selo DEMONSTRAÇÃO dos dois botões no canto superior. */
+.app-top .demo-tag{
+ position:relative;top:25px;flex:0 0 auto;
+}
+.app-top{margin-bottom:42px}
+@media(max-width:760px){
+ .app-top .demo-tag{top:27px}
+ .app-top{margin-bottom:48px}
+}
+@media(max-width:420px){
+ .app-top .demo-tag{top:30px;font-size:8px}
+ .app-top{margin-bottom:52px}
+}
+/* Ao expandir, mantém o mesmo cabeçalho visual do site e reserva o espaço do painel. */
+.preview.preview-expanded{top:92px!important}
+.preview.preview-expanded .app-top .demo-tag{top:18px}
+.preview.preview-expanded .app-top{margin-bottom:clamp(34px,3vw,48px)!important}
+
 </style>
 </head>
 <body>
@@ -989,9 +1024,11 @@ document.querySelectorAll('.app-window').forEach(app=>{
 
 
 <script>
-/* Amplia a demonstração sem removê-la da sua seção: a navegação interna continua funcional. */
+/* Expansão integrada ao cabeçalho do site. O controle de tema acompanha a demonstração ativa. */
 (()=>{
  const buttons=[...document.querySelectorAll('.fullscreen-toggle')];
+ const headerRight=document.querySelector('.site-header .header-right');
+ const backLink=headerRight?.querySelector('.back-to-site');
  const expandIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M10 10 3 3m0 0h6M3 3v6M14 10l7-7m0 0h-6m6 0v6M10 14l-7 7m0 0h6m-6 0v-6m11-1 7 7m0 0h-6m6 0v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  const collapseIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 3 10 10m0 0V4m-6 6h6M21 3l-7 7m0 0V4m0 6h6M3 21l7-7m0 0v6m-6-6h6m11 7-7-7m0 0v6m0-6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  let active=null,oldOverflow='';
@@ -1001,8 +1038,16 @@ document.querySelectorAll('.app-window').forEach(app=>{
   button.title=on?'Voltar ao tamanho normal':'Ampliar dentro da página';
   button.setAttribute('aria-expanded',String(on));
  };
+ const restoreThemeButton=()=>{
+  if(!active?.themeButton)return;
+  const {themeButton,themePlaceholder}=active;
+  themeButton.classList.remove('in-site-header');
+  if(themePlaceholder?.parentNode)themePlaceholder.parentNode.insertBefore(themeButton,themePlaceholder);
+  themePlaceholder?.remove();
+ };
  const close=()=>{
   if(!active)return;
+  restoreThemeButton();
   active.preview.classList.remove('preview-expanded');
   active.windowEl.classList.remove('demo-expanded');
   document.body.style.overflow=oldOverflow;
@@ -1012,12 +1057,20 @@ document.querySelectorAll('.app-window').forEach(app=>{
   setLabel(button,false);
   button.addEventListener('click',()=>{
    if(active){if(active.button===button){close();return;}close();}
-   const windowEl=button.closest('.app-window'),preview=windowEl&&windowEl.closest('.preview');
+   const windowEl=button.closest('.app-window'),preview=windowEl?.closest('.preview');
+   const themeButton=windowEl?.querySelector('.prototype-theme-toggle');
    if(!windowEl||!preview)return;
    oldOverflow=document.body.style.overflow;
    document.body.style.overflow='hidden';
+   if(themeButton&&headerRight){
+    const themePlaceholder=document.createComment('posição original do botão de tema');
+    themeButton.parentNode.insertBefore(themePlaceholder,themeButton);
+    themeButton.classList.add('in-site-header');
+    headerRight.insertBefore(themeButton,backLink||null);
+    active={preview,windowEl,button,themeButton,themePlaceholder};
+   }else active={preview,windowEl,button};
    preview.classList.add('preview-expanded');windowEl.classList.add('demo-expanded');
-   setLabel(button,true);active={preview,windowEl,button};
+   setLabel(button,true);
   });
  });
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
