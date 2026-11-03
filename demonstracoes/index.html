@@ -1017,6 +1017,33 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .app-window .workspace-modal-dialog{width:100%!important;max-height:calc(100% - 12px)!important}
 }
 
+
+/* Selo DEMONSTRAÇÃO ao lado esquerdo do botão Expandir, em todos os tamanhos */
+.app-window .app-top .demo-tag{
+ position:absolute!important;
+ top:10px!important;
+ right:104px!important;
+ z-index:7;
+ transform:none!important;
+ white-space:nowrap;
+ margin:0!important;
+}
+@media(max-width:760px){
+ .app-window .app-top .demo-tag{
+  top:7px!important;
+  right:52px!important;
+ }
+}
+@media(max-width:420px){
+ .app-window .app-top .demo-tag{
+  top:7px!important;
+  right:49px!important;
+  font-size:6px!important;
+  letter-spacing:.45px!important;
+  padding:3px 5px!important;
+ }
+}
+
 </style>
 </head>
 <body>
