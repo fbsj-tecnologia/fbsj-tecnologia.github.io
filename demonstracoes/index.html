@@ -259,6 +259,19 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .app-window.demo-fullscreen-fallback .fullscreen-toggle{top:10px!important;right:10px!important}
 }
 
+
+/* Menu de ações por cadastro: detalhar, editar e excluir */
+.workspace-table td.row-actions{position:relative;width:48px;min-width:48px;text-align:center;overflow:visible}
+.row-menu-toggle{width:34px;height:34px;border:1px solid #35577f;border-radius:9px;background:#17385f;color:#eaf4ff;font-size:23px;line-height:1;cursor:pointer}
+.row-menu-toggle:hover,.row-menu-toggle[aria-expanded="true"]{background:#087bdf;border-color:#00d4ff}
+.row-action-menu{position:absolute;right:8px;top:calc(100% - 3px);z-index:30;min-width:142px;padding:5px;background:#102849;border:1px solid #426b99;border-radius:10px;box-shadow:0 12px 28px #0008;text-align:left}
+.row-action-menu[hidden]{display:none}
+.row-action-menu button{display:block;width:100%;padding:9px 10px;border:0;border-radius:7px;background:transparent;color:#eaf4ff;text-align:left;font:600 12px var(--font);cursor:pointer}
+.row-action-menu button:hover{background:#1b4775}
+.row-action-menu button.danger{color:#ff9292}
+.workspace-table tr[data-editing="true"]{outline:1px solid #00d4ff;background:#14365b}
+@media(max-width:760px){.row-action-menu{right:4px;min-width:128px}.row-menu-toggle{width:30px;height:30px}}
+
 </style>
 </head>
 <body>
@@ -370,8 +383,11 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   originals.set(panel.id,content.innerHTML);
   panel.querySelectorAll('.app-nav span').forEach((item,i)=>{item.setAttribute('role','button');item.tabIndex=0;item.setAttribute('aria-label','Abrir '+item.textContent.trim())});
  });
+ function rowMenu(){
+  return `<td class="row-actions"><button class="row-menu-toggle" type="button" aria-label="Abrir opções do cadastro" aria-expanded="false" data-menu-toggle>⋮</button><div class="row-action-menu" hidden><button type="button" data-record-action="details">Detalhar</button><button type="button" data-record-action="edit">Editar</button><button type="button" class="danger" data-record-action="delete">Excluir</button></div></td>`;
+ }
  function makeTable(cols,rows){
-  return `<div class="workspace-table-wrap"><table class="workspace-table"><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}<th>Ação</th></tr></thead><tbody>${rows.map((r,i)=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}<td><button data-row-action="${i}">Detalhes</button></td></tr>`).join('')}</tbody></table></div>`;
+  return `<div class="workspace-table-wrap"><table class="workspace-table"><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}<th>Ações</th></tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}${rowMenu()}</tr>`).join('')}</tbody></table></div>`;
  }
  function openModule(panel,label){
   const content=panel.querySelector('.app-content'),data=(demos[panel.id]||{})[label];
@@ -387,24 +403,55 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
  document.addEventListener('click',e=>{
   const nav=e.target.closest('.app-nav span');
   if(nav){const panel=nav.closest('.demo-panel');panel.querySelectorAll('.app-nav span').forEach(x=>x.classList.toggle('active',x===nav));openModule(panel,nav.textContent.trim());return}
-  const action=e.target.closest('[data-new],[data-cancel],[data-save],[data-export],[data-row-action]');
+  const menuToggle=e.target.closest('[data-menu-toggle]');
+  if(menuToggle){
+   const cell=menuToggle.closest('.row-actions'),menu=cell.querySelector('.row-action-menu'),willOpen=menu.hidden;
+   document.querySelectorAll('.row-action-menu').forEach(m=>m.hidden=true);
+   document.querySelectorAll('[data-menu-toggle]').forEach(b=>b.setAttribute('aria-expanded','false'));
+   menu.hidden=!willOpen;menuToggle.setAttribute('aria-expanded',String(willOpen));return;
+  }
+  const action=e.target.closest('[data-new],[data-cancel],[data-save],[data-export],[data-record-action]');
   if(!action)return;
   const screen=action.closest('.workspace-screen');if(!screen)return;
   const form=screen.querySelector('.workspace-form'),feedback=screen.querySelector('.workspace-feedback');
-  if(action.hasAttribute('data-new')){form.hidden=false;form.querySelector('input').focus();return}
-  if(action.hasAttribute('data-cancel')){form.hidden=true;return}
+  if(action.hasAttribute('data-new')){delete form.dataset.editingRow;form.reset();form.hidden=false;form.querySelector('input').focus();return}
+  if(action.hasAttribute('data-cancel')){delete form.dataset.editingRow;screen.querySelectorAll('tr[data-editing="true"]').forEach(r=>r.removeAttribute('data-editing'));form.hidden=true;form.reset();return}
   if(action.hasAttribute('data-save')){
    const name=form.querySelector('[name=name]').value.trim(),detail=form.querySelector('[name=detail]').value.trim(),status=form.querySelector('[name=status]').value;
    if(!name){feedback.textContent='Informe um nome ou descrição para salvar.';return}
-   const table=screen.querySelector('.workspace-table tbody'),cells=[name,detail||'Cadastro demonstrativo',new Date().toLocaleDateString('pt-BR'),status];
-   const tr=document.createElement('tr');tr.innerHTML=cells.map(v=>`<td>${esc(v)}</td>`).join('')+'<td><button data-row-action="novo">Detalhes</button></td>';table.prepend(tr);form.reset();form.hidden=true;feedback.textContent='✓ Cadastro demonstrativo adicionado nesta sessão.';return;
+   const table=screen.querySelector('.workspace-table tbody'),editing=form.dataset.editingRow;
+   if(editing){
+    const tr=table.querySelector('tr[data-editing="true"]');
+    if(tr){const cells=tr.querySelectorAll('td');if(cells[0])cells[0].textContent=name;if(cells[1])cells[1].textContent=detail||'Cadastro demonstrativo';if(cells.length>3)cells[3].textContent=status;tr.removeAttribute('data-editing');}
+    delete form.dataset.editingRow;form.reset();form.hidden=true;feedback.textContent='✓ Cadastro atualizado nesta sessão.';return;
+   }
+   const cells=[name,detail||'Cadastro demonstrativo',new Date().toLocaleDateString('pt-BR'),status];
+   const tr=document.createElement('tr');tr.innerHTML=cells.map(v=>`<td>${esc(v)}</td>`).join('')+rowMenu();table.prepend(tr);form.reset();form.hidden=true;feedback.textContent='✓ Cadastro demonstrativo adicionado nesta sessão.';return;
   }
   if(action.hasAttribute('data-export')){
    const table=screen.querySelector('.workspace-table');if(!table)return;
    const lines=[...table.querySelectorAll('tr')].map(tr=>[...tr.children].slice(0,-1).map(td=>'"'+td.textContent.replace(/"/g,'""')+'"').join(';'));
    const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='relatorio-demonstracao-fbsj.csv';a.click();URL.revokeObjectURL(url);feedback.textContent='✓ Relatório CSV exportado.';return;
   }
-  if(action.hasAttribute('data-row-action')){feedback.textContent='Detalhes do registro selecionado: informação fictícia para demonstração.';return}
+  if(action.hasAttribute('data-record-action')){
+   const row=action.closest('tr'),kind=action.dataset.recordAction;
+   action.closest('.row-action-menu').hidden=true;
+   const toggle=row.querySelector('[data-menu-toggle]');if(toggle)toggle.setAttribute('aria-expanded','false');
+   if(kind==='details'){
+    const values=[...row.querySelectorAll('td')].slice(0,-1).map(td=>td.textContent.trim());
+    feedback.textContent='Detalhes do cadastro: '+values.join(' · ');return;
+   }
+   if(kind==='edit'){
+    const cells=row.querySelectorAll('td');form.hidden=false;form.dataset.editingRow='true';row.dataset.editing='true';
+    form.querySelector('[name=name]').value=cells[0]?.textContent.trim()||'';
+    form.querySelector('[name=detail]').value=cells[1]?.textContent.trim()||'';
+    form.querySelector('[name=status]').value=cells[3]?.textContent.trim()||'Ativo';
+    form.querySelector('[name=name]').focus();feedback.textContent='Editando cadastro selecionado.';return;
+   }
+   if(kind==='delete'){
+    row.remove();feedback.textContent='Cadastro excluído desta demonstração.';return;
+   }
+  }
  });
  document.addEventListener('change',e=>{
   if(!e.target.matches('#excelFile'))return;
