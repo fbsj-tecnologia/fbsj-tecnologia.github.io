@@ -1134,6 +1134,23 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .app-window .app-content{padding:82px 7px 13px!important}
 }
 
+
+/* Ajuste definitivo do ícone mobile: manter somente o glifo de expandir */
+@media(max-width:760px){
+ .app-window > .fullscreen-toggle::before{
+  content:"⛶"!important;display:block!important;
+  width:auto!important;height:auto!important;
+  border:0!important;border-radius:0!important;
+  clip-path:none!important;font-family:Arial,sans-serif!important;
+  font-size:22px!important;line-height:1!important;
+ }
+ .app-window > .fullscreen-toggle::after{content:none!important;display:none!important}
+ .app-window > .fullscreen-toggle span{display:none!important}
+}
+@media(max-width:420px){
+ .app-window > .fullscreen-toggle::before{font-size:21px!important}
+}
+
 </style>
 </head>
 <body>
