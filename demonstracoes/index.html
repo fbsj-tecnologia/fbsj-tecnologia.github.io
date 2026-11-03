@@ -360,6 +360,15 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .workspace-modal-form input,.workspace-modal-form select{padding:10px;font-size:12px}
 }
 
+
+/* Situação como seleção por rádio: Ativo é o padrão de novos cadastros */
+.workspace-status-field{margin:0;padding:0;border:0;min-width:0}
+.workspace-status-field legend{margin-bottom:7px;color:#a9bfdb;font:600 10px var(--font)}
+.workspace-status-options{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.workspace-status-options label{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border:1px solid #35547d;border-radius:8px;background:#0d2342;color:#eaf4ff;font:600 11px var(--font);cursor:pointer}
+.workspace-status-options input{width:16px;height:16px;margin:0;accent-color:#00bfe8}
+.workspace-status-options label:has(input:checked){border-color:#00bfe8;background:#123967;box-shadow:0 0 0 1px #00bfe833}
+
 </style>
 </head>
 <body>
@@ -501,7 +510,14 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
  }
  function editorContent(screen,values=[]){
   const headers=[...screen.querySelectorAll('.workspace-table thead th')].slice(0,-1);
-  return `<form class="workspace-modal-form">${headers.map((header,i)=>`<label>${esc(header.textContent.trim())}<input name="field-${i}" ${i===0?'required':''} value="${esc(values[i]||'')}" placeholder="${esc(header.textContent.trim())}"></label>`).join('')}<div class="workspace-modal-actions"><button type="button" class="workspace-action" data-modal-close>Cancelar</button><button type="button" class="workspace-action primary" data-modal-save>Salvar</button></div></form>`;
+  return `<form class="workspace-modal-form">${headers.map((header,i)=>{
+   const label=header.textContent.trim(),value=values[i]||'';
+   if(/^(situação|situacao|status)$/i.test(label)){
+    const active=value.toLowerCase()!=='inativo';
+    return `<fieldset class="workspace-status-field"><legend>${esc(label)}</legend><div class="workspace-status-options"><label><input type="radio" name="field-${i}" value="Ativo" ${active?'checked':''}> <span>Ativo</span></label><label><input type="radio" name="field-${i}" value="Inativo" ${!active?'checked':''}> <span>Inativo</span></label></div></fieldset>`;
+   }
+   return `<label>${esc(label)}<input name="field-${i}" ${i===0?'required':''} value="${esc(value)}" placeholder="${esc(label)}"></label>`;
+  }).join('')}<div class="workspace-modal-actions"><button type="button" class="workspace-action" data-modal-close>Cancelar</button><button type="button" class="workspace-action primary" data-modal-save>Salvar</button></div></form>`;
  }
  document.addEventListener('click',e=>{
   const nav=e.target.closest('.app-nav span');
@@ -524,8 +540,13 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   const modalSave=e.target.closest('[data-modal-save]');
   if(modalSave){
    const screen=modalSave.closest('.workspace-screen'),modal=screen.querySelector('[data-workspace-modal]'),form=modal.querySelector('.workspace-modal-form');
-   const fields=[...form.querySelectorAll('input')],values=fields.map(input=>input.value.trim());
-   if(!values[0]){fields[0]?.focus();return}
+   const headers=[...screen.querySelectorAll('.workspace-table thead th')].slice(0,-1);
+   const values=headers.map((_,i)=>{
+    const control=form.querySelectorAll(`[name="field-${i}"]`);
+    if(control.length>1&&control[0].type==='radio')return form.querySelector(`[name="field-${i}"]:checked`)?.value||'Ativo';
+    return control[0]?.value.trim()||'';
+   });
+   if(!values[0]){form.querySelector('input[required]')?.focus();return}
    const table=screen.querySelector('.workspace-table tbody'),row=modal._editingRow;
    if(row){
     const cells=row.querySelectorAll('td');values.forEach((value,i)=>{if(cells[i])cells[i].textContent=value||'—'});
