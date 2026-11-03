@@ -143,6 +143,19 @@ html:not([data-theme="dark"]) .foot,html[data-theme="light"] .foot{color:#71809A
 .workspace-stat{border:1px solid #29476f;background:#172f52;border-radius:10px;padding:12px}
 .workspace-stat small{display:block;color:#a9bfdb;font-size:9px}
 .workspace-stat b{display:block;color:#f1f7ff;font:700 16px var(--display);margin-top:5px}
+.workspace-grid-container{width:100%;min-width:0}
+.workspace-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 2px 2px;font-size:10px;color:#a9bfdb}
+.workspace-pagination label{display:flex;align-items:center;gap:6px}
+.workspace-page-size{border:1px solid #35547d;border-radius:6px;background:#0b1e3c;color:#eaf4ff;padding:5px 8px;font:inherit}
+.workspace-page-info{margin-left:auto}
+.workspace-page-actions{display:flex;gap:6px}
+.workspace-page-actions button{border:1px solid #355a82;border-radius:6px;background:#18385f;color:#eaf4ff;padding:6px 9px;font:inherit;cursor:pointer}
+.workspace-page-actions button:disabled{opacity:.4;cursor:not-allowed}
+.app-window.prototype-theme-light .workspace-pagination{color:#536781}
+.app-window.prototype-theme-light .workspace-page-size{background:#fff;color:#17395f;border-color:#b9c9dd}
+.app-window.prototype-theme-light .workspace-page-actions button{background:#e8f0fa;color:#17395f;border-color:#b8c9de}
+.app-window.prototype-theme-light .workspace-page-actions button:disabled{opacity:.4}
+@media(max-width:520px){.workspace-pagination{align-items:flex-start}.workspace-page-info{order:3;width:100%;margin:0}.workspace-page-actions{margin-left:auto}}
 .workspace-table-wrap{overflow:auto;border:1px solid #29476f;border-radius:10px;margin-top:10px}
 .workspace-table{width:100%;border-collapse:collapse;min-width:390px;color:#dbeaff;font-size:10px}
 .workspace-table th{text-align:left;color:#9db5d5;font-size:9px;padding:10px;background:#102747}
@@ -1134,7 +1147,25 @@ document.querySelectorAll('.app-window').forEach(app=>{
  function makeTable(cols,rows,panelId,label){
   const extra=importedRecords.get(importKey(panelId,label))||[];
   const allRows=[...rows,...extra];
-  return `<div class="workspace-table-wrap"><table class="workspace-table"><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}<th>Ações</th></tr></thead><tbody>${allRows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}${rowMenu()}</tr>`).join('')}</tbody></table></div>`;
+  return `<div class="workspace-grid-container"><div class="workspace-table-wrap"><table class="workspace-table"><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}<th>Ações</th></tr></thead><tbody>${allRows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}${rowMenu()}</tr>`).join('')}</tbody></table></div><div class="workspace-pagination" data-grid-pagination><label>Exibir <select class="workspace-page-size" aria-label="Quantidade de registros por página"><option value="10" selected>10</option><option value="20">20</option><option value="30">30</option></select> por página</label><span class="workspace-page-info" aria-live="polite"></span><div class="workspace-page-actions"><button type="button" data-page-prev disabled>Anterior</button><button type="button" data-page-next disabled>Próxima</button></div></div></div>`;
+ }
+ function updateGridPagination(screen,reset=false){
+  const container=screen?.querySelector('.workspace-grid-container');if(!container)return;
+  const table=container.querySelector('.workspace-table'),body=table?.querySelector('tbody'),pager=container.querySelector('[data-grid-pagination]');
+  if(!body||!pager)return;
+  const sizeSelect=pager.querySelector('.workspace-page-size'),size=Number(sizeSelect.value)||10;
+  let page=Number(pager.dataset.page||1);if(reset)page=1;
+  const query=(screen.querySelector('.workspace-search')?.value||'').trim().toLocaleLowerCase('pt-BR');
+  const all=[...body.rows],filtered=all.filter(row=>row.textContent.toLocaleLowerCase('pt-BR').includes(query));
+  const pages=Math.max(1,Math.ceil(filtered.length/size));page=Math.min(Math.max(1,page),pages);pager.dataset.page=String(page);
+  const start=(page-1)*size,end=start+size;
+  all.forEach(row=>{row.hidden=true});
+  filtered.slice(start,end).forEach(row=>{row.hidden=false});
+  const info=pager.querySelector('.workspace-page-info');
+  info.textContent=filtered.length?(`Exibindo ${start+1}–${Math.min(end,filtered.length)} de ${filtered.length} registro(s)`):'Nenhum registro encontrado';
+  pager.querySelector('[data-page-prev]').disabled=page<=1;
+  pager.querySelector('[data-page-next]').disabled=page>=pages;
+  pager.hidden=all.length===0;
  }
  function renderImportModule(panel){
   const opts=importTargets[panel.id]||[];
@@ -1159,6 +1190,7 @@ document.querySelectorAll('.app-window').forEach(app=>{
   const config=data||{stats:[['Registros','24'],['Atualizados','Hoje'],['Situação','Ativa']],cols:['Nome','Descrição','Atualização','Status'],rows:[[label+' de exemplo','Registro demonstrativo','Hoje','Ativo'],['Item de demonstração','Informação ilustrativa','Ontem','Ativo']]};
   const title=panel.querySelector('.app-title')?.textContent||'Área de gestão';
   content.innerHTML=`<div class="app-top"><div><div class="app-title">${esc(label)}</div><div class="app-sub">${esc(title)} · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="workspace-screen"><div class="workspace-grid">${config.stats.map(s=>`<div class="workspace-stat"><small>${esc(s[0])}</small><b>${esc(s[1])}</b></div>`).join('')}</div><div class="workspace-toolbar"><input class="workspace-search" type="search" placeholder="Pesquisar em ${esc(label.toLowerCase())}..." aria-label="Pesquisar ${esc(label)}"><button class="workspace-action primary" data-new>＋ Novo cadastro</button><div class="workspace-export"><button class="workspace-action" type="button" data-export-toggle aria-expanded="false">Exportar ▾</button><div class="workspace-export-menu" data-export-menu hidden><button type="button" data-export-format="xlsx">Excel (.xlsx)</button><button type="button" data-export-format="csv">CSV (.csv)</button><button type="button" data-export-format="pdf">PDF (.pdf)</button></div></div></div><div class="workspace-modal" data-workspace-modal hidden aria-hidden="true"></div><div class="workspace-feedback" aria-live="polite">Exibindo dados fictícios para demonstração.</div><div data-table>${makeTable(config.cols,config.rows,panel.id,label)}</div></div>`;
+  updateGridPagination(content.querySelector('.workspace-screen'));
  }
  function normalizeImportHeader(value){
   return String(value??'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]/g,'');
@@ -1354,6 +1386,7 @@ document.querySelectorAll('.app-window').forEach(app=>{
     const tr=document.createElement('tr');
     tr.innerHTML=values.map(value=>'<td>'+esc(value||'—')+'</td>').join('')+rowMenu();table.prepend(tr);
     screen.querySelector('.workspace-feedback').textContent='✓ Cadastro demonstrativo adicionado nesta sessão.';
+    updateGridPagination(screen,true);
    }
    closeRecordModal(screen);return;
   }
@@ -1379,7 +1412,7 @@ document.querySelectorAll('.app-window').forEach(app=>{
     showRecordModal(screen,'Editar cadastro',editorContent(screen,values),row);return;
    }
    if(kind==='delete'){
-    row.remove();feedback.textContent='Cadastro excluído desta demonstração.';return;
+    row.remove();updateGridPagination(screen);feedback.textContent='Cadastro excluído desta demonstração.';return;
    }
   }
  });
@@ -1416,9 +1449,17 @@ document.querySelectorAll('.app-window').forEach(app=>{
  });
  document.addEventListener('input',e=>{
   if(!e.target.matches('.workspace-search'))return;
-  const table=e.target.closest('.workspace-screen').querySelector('.workspace-table');
-  const q=e.target.value.toLocaleLowerCase('pt-BR');
-  table.querySelectorAll('tbody tr').forEach(row=>row.hidden=!row.textContent.toLocaleLowerCase('pt-BR').includes(q));
+  updateGridPagination(e.target.closest('.workspace-screen'),true);
+ });
+ document.addEventListener('change',e=>{
+  if(!e.target.matches('.workspace-page-size'))return;
+  updateGridPagination(e.target.closest('.workspace-screen'),true);
+ });
+ document.addEventListener('click',e=>{
+  const button=e.target.closest('[data-page-prev],[data-page-next]');if(!button)return;
+  const pager=button.closest('[data-grid-pagination]');if(!pager)return;
+  pager.dataset.page=String(Math.max(1,Number(pager.dataset.page||1)+(button.hasAttribute('data-page-next')?1:-1)));
+  updateGridPagination(button.closest('.workspace-screen'));
  });
  document.addEventListener('keydown',e=>{
   if(e.target.matches('.app-nav span')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.target.click()}
