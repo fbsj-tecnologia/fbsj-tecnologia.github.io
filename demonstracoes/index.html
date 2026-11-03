@@ -325,6 +325,41 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 .workspace-detail-item strong{color:#f1f7ff;font-weight:600;overflow-wrap:anywhere}
 @media(max-width:480px){.workspace-modal{padding:12px}.workspace-modal-dialog{max-height:86vh;border-radius:15px}.workspace-modal-content{padding:14px}.workspace-detail-item{grid-template-columns:1fr;gap:4px}}
 
+
+/* Modais com a mesma identidade visual dos painéis de demonstração */
+.workspace-modal-backdrop{background:rgba(3,12,29,.76);backdrop-filter:blur(3px)}
+.workspace-modal-dialog{
+ width:min(100%,520px);max-height:min(84vh,720px);
+ background:linear-gradient(145deg,#102747 0%,#0b1e3c 100%);
+ border:1px solid #29476f;border-radius:14px;
+ box-shadow:0 22px 58px #020a19aa;color:#eaf4ff;
+}
+.workspace-modal-header{padding:15px 17px;background:#142d50;border-bottom:1px solid #29476f}
+.workspace-modal-header h3{font:700 15px var(--display);color:#f1f7ff}
+.workspace-modal-close{width:32px;height:32px;border:1px solid #2878b9;border-radius:8px;background:#123967;color:#eaf7ff;font-size:22px}
+.workspace-modal-close:hover{background:#087bdf}
+.workspace-modal-content{padding:16px}
+.workspace-modal-form{gap:11px}
+.workspace-modal-form label{gap:5px;color:#a9bfdb;font:600 10px var(--font)}
+.workspace-modal-form input,.workspace-modal-form select{
+ padding:10px 11px;border:1px solid #35547d;border-radius:8px;
+ background:#0d2342;color:#eaf4ff;font:11px var(--font);outline:none;
+}
+.workspace-modal-form input:focus,.workspace-modal-form select:focus{border-color:#00bfe8;box-shadow:0 0 0 2px #00bfe822}
+.workspace-modal-actions{gap:8px;margin-top:13px}
+.workspace-modal-actions .workspace-action{padding:9px 13px;font:700 10px var(--font)}
+.workspace-detail-item{border-bottom:1px solid #29476f;padding:10px 0;font-size:11px}
+.workspace-detail-item span{color:#91a8c9;font-size:10px}
+.workspace-detail-item strong{color:#eaf4ff;font-size:11px;font-weight:600}
+@media(max-width:480px){
+ .workspace-modal{padding:14px}
+ .workspace-modal-dialog{max-height:84vh;border-radius:12px}
+ .workspace-modal-header{padding:13px 14px}
+ .workspace-modal-content{padding:13px}
+ .workspace-modal-form{gap:10px}
+ .workspace-modal-form input,.workspace-modal-form select{padding:10px;font-size:12px}
+}
+
 </style>
 </head>
 <body>
