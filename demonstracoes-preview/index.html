@@ -544,6 +544,26 @@ html[data-theme="light"] .app-window .workspace-table button{
  color:#bfdbfe!important;
 }
 
+
+/* Tema do site: a demonstração mantém o painel azul-marinho nos dois modos.
+   O que muda é a cor da tipografia: azul no claro e branco no escuro. */
+html[data-theme="light"] .app-window,
+html[data-theme="dark"] .app-window{color-scheme:dark;background:#0b1e3c!important;color:#eaf4ff}
+html[data-theme="light"] .app-window :is(h1,h2,h3,h4,p,span,small,label,td,th,strong,b,em,li,dt,dd),
+html[data-theme="light"] .app-window .workspace-import-heading,
+html[data-theme="light"] .app-window .workspace-import-note,
+html[data-theme="light"] .app-window .workspace-feedback{
+ color:#60a5fa!important;
+}
+html[data-theme="dark"] .app-window :is(h1,h2,h3,h4,p,span,small,label,td,th,strong,b,em,li,dt,dd),
+html[data-theme="dark"] .app-window .workspace-import-heading,
+html[data-theme="dark"] .app-window .workspace-import-note,
+html[data-theme="dark"] .app-window .workspace-feedback{
+ color:#eaf4ff!important;
+}
+html[data-theme="light"] .app-window .app-nav span.active{color:#bfdbfe!important}
+html[data-theme="dark"] .app-window .app-nav span.active{color:#ffffff!important}
+
 </style>
 </head>
 <body>
@@ -599,7 +619,7 @@ const tabs=[...document.querySelectorAll('[data-tab]')];
 function activate(name){tabs.forEach(t=>{let on=t.dataset.tab===name;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;document.getElementById('panel-'+t.dataset.tab).classList.toggle('active',on)})}
 tabs.forEach((t,i)=>{t.addEventListener('click',()=>activate(t.dataset.tab));t.addEventListener('keydown',e=>{if(['ArrowRight','ArrowLeft'].includes(e.key)){e.preventDefault();let n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;tabs[n].focus();activate(tabs[n].dataset.tab)}})});
 const toggle=document.getElementById('themeToggle'),icon=document.getElementById('themeIcon'),label=document.getElementById('themeText');
-function setTheme(t){document.documentElement.dataset.theme=t;let dark=t==='dark';icon.textContent=dark?'☀':'☾';label.textContent=dark?'Modo claro':'Modo escuro';try{localStorage.setItem('fbsj-demo-theme',t)}catch(e){}}
+function setTheme(t){document.documentElement.dataset.theme=t;let dark=t==='dark';icon.textContent=dark?'☾':'☀';label.textContent=dark?'Modo escuro':'Modo claro';toggle.setAttribute('aria-label',dark?'Tema escuro ativo':'Tema claro ativo');toggle.title=dark?'Tema escuro ativo — clique para usar o modo claro':'Tema claro ativo — clique para usar o modo escuro';try{localStorage.setItem('fbsj-demo-theme',t)}catch(e){}}
 let initial='light';try{initial=localStorage.getItem('fbsj-demo-theme')||'light'}catch(e){}if(!['light','dark'].includes(initial))initial='light';setTheme(initial);toggle.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
 
 })();
