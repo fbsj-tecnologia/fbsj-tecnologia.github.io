@@ -233,7 +233,7 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 </div></div>
 
 <section class="demo-panel active" id="panel-contabil" role="tabpanel" aria-labelledby="tab-contabil">
-<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button>
+<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia"> <span>Tela cheia</span></button>
 <aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Painel</span><span>Clientes</span><span>Financeiro</span><span>Obrigações</span><span>Relatórios</span><span>Importação</span></div></aside>
 <div class="app-content"><div class="app-top"><div><div class="app-title">Painel de gestão contábil</div><div class="app-sub">Visão financeira · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div>
 <div class="app-kpis"><div class="app-kpi"><small>Receita mensal</small><b id="miniRevenue">R$ 48,7 mil</b><em>▲ 12,8%</em></div><div class="app-kpi"><small>Despesas</small><b>R$ 18,4 mil</b><em>▼ 3,2%</em></div><div class="app-kpi"><small>Resultado</small><b>R$ 30,3 mil</b><em>▲ 16,4%</em></div><div class="app-kpi"><small>Clientes ativos</small><b>128</b><em>▲ 8 novos</em></div></div>
@@ -398,11 +398,14 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
 /* Controle de tela cheia independente para cada demonstração. */
 (()=>{
  const buttons=[...document.querySelectorAll('.fullscreen-toggle')];
+ const expandIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M8 3H3v5M3 3l7 7M16 3h5v5m0-5-7 7M3 16v5h5m-5 0 7-7m11 2v5h-5m5 0-7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const collapseIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M3 8V3h5M3 3l7 7M21 8V3h-5m5 0-7 7M8 21H3v-5m0 5 7-7m6 7h5v-5m0 5-7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  const setLabel=(button,active)=>{
-  button.innerHTML=active?'↙ <span>Sair da tela cheia</span>':'⛶ <span>Tela cheia</span>';
+  button.innerHTML=(active?collapseIcon:expandIcon)+'<span>'+(active?'Sair da tela cheia':'Tela cheia')+'</span>';
   button.setAttribute('aria-label',active?'Sair da tela cheia':'Abrir demonstração em tela cheia');
-  button.title=active?'Voltar ao tamanho normal':'Tela cheia';
+  button.title=active?'Voltar ao tamanho normal':'Expandir para tela cheia';
  };
+ buttons.forEach(button=>setLabel(button,false));
  async function exitFullscreen(){
   if(document.fullscreenElement&&document.exitFullscreen){
    try{await document.exitFullscreen()}catch(_){}
