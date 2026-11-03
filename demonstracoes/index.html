@@ -272,6 +272,39 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 .workspace-table tr[data-editing="true"]{outline:1px solid #00d4ff;background:#14365b}
 @media(max-width:760px){.row-action-menu{right:4px;min-width:128px}.row-menu-toggle{width:30px;height:30px}}
 
+
+/* Integração: reorganiza o mapa para telas estreitas em orientação retrato */
+@media(max-width:760px){
+ #panel-integracao .app-content{padding:12px 9px}
+ #panel-integracao .app-top{gap:6px;margin-bottom:14px}
+ #panel-integracao .app-title{font-size:12px;line-height:1.25}
+ #panel-integracao .app-sub{font-size:8px;line-height:1.4}
+ #panel-integracao .demo-tag{font-size:6px;letter-spacing:.6px;padding:3px 5px}
+ #panel-integracao .app-chart{min-height:0!important;padding:9px!important}
+ #panel-integracao .integration-flow{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  grid-template-areas:"sources targets" "api api";
+  height:auto!important;gap:7px!important;align-items:stretch!important
+ }
+ #panel-integracao .integration-flow>div:first-child{grid-area:sources;gap:6px!important}
+ #panel-integracao .integration-flow>div:nth-child(2){grid-area:api;padding:9px 8px!important;min-height:46px}
+ #panel-integracao .integration-flow>div:last-child{grid-area:targets;gap:6px!important}
+ #panel-integracao .integration-flow .app-kpi{min-width:0;padding:8px 4px;font-size:clamp(10px,2.8vw,13px);overflow-wrap:anywhere}
+ #panel-integracao .app-table{padding:7px;margin-top:8px}
+ #panel-integracao .app-table-head,#panel-integracao .app-table-row{
+  grid-template-columns:.8fr 1.2fr .65fr!important;gap:4px;padding:6px 2px;font-size:7px
+ }
+ #panel-integracao .app-table-head span:nth-child(3),
+ #panel-integracao .app-table-row span:nth-child(3){display:none}
+}
+@media(max-width:380px){
+ #panel-integracao .app-side{padding-left:5px;padding-right:5px}
+ #panel-integracao .app-nav span{padding:7px 4px;font-size:7px}
+ #panel-integracao .app-content{padding:10px 7px}
+ #panel-integracao .integration-flow .app-kpi{font-size:10px}
+ #panel-integracao .app-table-head,#panel-integracao .app-table-row{font-size:6px}
+}
+
 </style>
 </head>
 <body>
@@ -308,7 +341,7 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 </section>
 
 <section class="demo-panel" id="panel-integracao" role="tabpanel" aria-labelledby="tab-integracao">
-<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Fluxos</span><span>Conectores</span><span>Filas</span><span>Logs</span><span>APIs</span><span>Chaves</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Plataforma de integração</div><div class="app-sub">Sincronização entre sistemas · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-chart" style="min-height:190px"><div class="chart-label">Mapa de integrações</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:10px;text-align:center;height:135px"><div style="display:grid;gap:10px"><span class="app-kpi">ERP</span><span class="app-kpi">CRM</span><span class="app-kpi">E-commerce</span></div><div style="background:linear-gradient(135deg,#007bff,#00d4ff);border-radius:12px;padding:18px 5px;font-weight:800;font-size:13px;box-shadow:0 0 25px #007bff66">API<br><small style="font-size:8px">REST · .NET</small></div><div style="display:grid;gap:10px"><span class="app-kpi">Portal</span><span class="app-kpi">Financeiro</span><span class="app-kpi">Estoque</span></div></div></div><div class="app-table"><div class="app-table-head"><span>Fluxo</span><span>Origem → Destino</span><span>Execução</span><span>Status</span></div><div class="app-table-row"><span>Pedidos</span><span>E-commerce → ERP</span><span>há 2 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Clientes</span><span>CRM → ERP</span><span>há 5 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Financeiro</span><span>ERP → Portal</span><span>há 8 min</span><span class="ok">OK</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Plataforma de integração de sistemas</h2><p>Hub de APIs que conecta ERP, CRM, e-commerce e plataformas internas, sincronizando pedidos, estoque e financeiro com rastreabilidade.</p><div class="tech">C#&nbsp; · &nbsp;APIs REST&nbsp; · &nbsp;Oracle&nbsp; · &nbsp;.NET</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20integra%C3%A7%C3%A3o%20de%20sistemas">Quero uma solução assim →</a></div></div></article>
+<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Fluxos</span><span>Conectores</span><span>Filas</span><span>Logs</span><span>APIs</span><span>Chaves</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Plataforma de integração</div><div class="app-sub">Sincronização entre sistemas · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-chart" style="min-height:190px"><div class="chart-label">Mapa de integrações</div><div class="integration-flow" style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:10px;text-align:center;height:135px"><div style="display:grid;gap:10px"><span class="app-kpi">ERP</span><span class="app-kpi">CRM</span><span class="app-kpi">E-commerce</span></div><div style="background:linear-gradient(135deg,#007bff,#00d4ff);border-radius:12px;padding:18px 5px;font-weight:800;font-size:13px;box-shadow:0 0 25px #007bff66">API<br><small style="font-size:8px">REST · .NET</small></div><div style="display:grid;gap:10px"><span class="app-kpi">Portal</span><span class="app-kpi">Financeiro</span><span class="app-kpi">Estoque</span></div></div></div><div class="app-table"><div class="app-table-head"><span>Fluxo</span><span>Origem → Destino</span><span>Execução</span><span>Status</span></div><div class="app-table-row"><span>Pedidos</span><span>E-commerce → ERP</span><span>há 2 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Clientes</span><span>CRM → ERP</span><span>há 5 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Financeiro</span><span>ERP → Portal</span><span>há 8 min</span><span class="ok">OK</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Plataforma de integração de sistemas</h2><p>Hub de APIs que conecta ERP, CRM, e-commerce e plataformas internas, sincronizando pedidos, estoque e financeiro com rastreabilidade.</p><div class="tech">C#&nbsp; · &nbsp;APIs REST&nbsp; · &nbsp;Oracle&nbsp; · &nbsp;.NET</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20integra%C3%A7%C3%A3o%20de%20sistemas">Quero uma solução assim →</a></div></div></article>
 </section>
 
 <section class="demo-panel" id="panel-automacao" role="tabpanel" aria-labelledby="tab-automacao">
