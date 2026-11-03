@@ -1522,3 +1522,17 @@ document.querySelectorAll('.app-window').forEach(app=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
 })();
 </script>
+
+/* Em telas pequenas, empilha os controles no canto superior direito:
+   expandir primeiro e tema logo abaixo, sem cobrir o título da aplicação. */
+@media(max-width:760px){
+ .app-window .fullscreen-toggle{top:7px;right:7px}
+ .app-window .prototype-theme-toggle{top:42px;right:7px;left:auto}
+ .app-window .app-content{padding-top:82px!important}
+}
+@media(max-width:420px){
+ .app-window .fullscreen-toggle{top:7px;right:7px}
+ .app-window .prototype-theme-toggle{top:40px;right:7px;left:auto;min-height:26px;padding:0 7px;font-size:8px}
+ .app-window .prototype-theme-toggle .theme-icon{font-size:11px}
+ .app-window .app-content{padding:82px 7px 13px!important}
+}
