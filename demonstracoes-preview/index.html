@@ -972,6 +972,30 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .workspace-modal-form input,.workspace-modal-form select{font-size:13px!important}
 }
 
+
+/* O modal pertence à aplicação: cobre somente a janela do sistema, nunca a página do site. */
+.app-window{position:relative!important}
+.app-window .workspace-modal{
+ position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+ min-height:100%!important;z-index:10050!important;
+ padding:clamp(12px,2vw,28px)!important;
+}
+.app-window .workspace-modal-backdrop{
+ position:absolute!important;inset:0!important;border-radius:inherit!important;
+ background:rgba(2,9,22,.78)!important;backdrop-filter:blur(4px)!important;
+}
+.app-window.prototype-theme-light .workspace-modal-backdrop{
+ background:rgba(15,35,62,.38)!important;backdrop-filter:blur(4px)!important;
+}
+.app-window .workspace-modal-dialog{
+ width:min(520px,calc(100% - 24px))!important;
+ max-height:calc(100% - 24px)!important;
+}
+@media(max-width:600px){
+ .app-window .workspace-modal{padding:10px!important}
+ .app-window .workspace-modal-dialog{width:100%!important;max-height:calc(100% - 12px)!important}
+}
+
 </style>
 </head>
 <body>
