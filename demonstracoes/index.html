@@ -227,6 +227,17 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .demo-tag{transform:translateY(8px)}
 }
 
+
+/* Evita que o selo DEMONSTRAÇÃO fique atrás do controle de tela cheia em celulares */
+@media(max-width:760px){
+ .app-top{margin-bottom:28px}
+ .app-top .demo-tag{transform:translateY(22px)}
+}
+@media(max-width:420px){
+ .app-top{margin-bottom:30px}
+ .app-top .demo-tag{transform:translateY(25px)}
+}
+
 </style>
 </head>
 <body>
