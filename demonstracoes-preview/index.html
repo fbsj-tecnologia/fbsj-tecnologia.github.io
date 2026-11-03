@@ -493,6 +493,57 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .preview.preview-expanded .fullscreen-toggle{top:8px!important;right:8px!important;padding:6px 9px!important;font-size:10px!important}
 }
 
+
+/* No modo claro, o site pode ficar claro, mas a interface demonstrativa permanece escura.
+   A tipografia interna passa para tons de azul para manter contraste e identidade visual. */
+html[data-theme="light"] .app-window{
+ color:#60a5fa!important;
+}
+html[data-theme="light"] .app-window .app-logo,
+html[data-theme="light"] .app-window .app-title,
+html[data-theme="light"] .app-window .workspace-stat b,
+html[data-theme="light"] .app-window .app-kpi b,
+html[data-theme="light"] .app-window .chart-label,
+html[data-theme="light"] .app-window .app-table-head,
+html[data-theme="light"] .app-window .workspace-import-heading b{
+ color:#93c5fd!important;
+}
+html[data-theme="light"] .app-window .app-sub,
+html[data-theme="light"] .app-window .app-nav span,
+html[data-theme="light"] .app-window .app-kpi small,
+html[data-theme="light"] .app-window .app-table,
+html[data-theme="light"] .app-window .workspace-stat small,
+html[data-theme="light"] .app-window .workspace-table,
+html[data-theme="light"] .app-window .workspace-table th,
+html[data-theme="light"] .app-window .workspace-table td,
+html[data-theme="light"] .app-window .workspace-import-heading span,
+html[data-theme="light"] .app-window .workspace-import-label,
+html[data-theme="light"] .app-window .workspace-import-note,
+html[data-theme="light"] .app-window .workspace-import-drop,
+html[data-theme="light"] .app-window .workspace-import-drop span,
+html[data-theme="light"] .app-window .workspace-feedback{
+ color:#60a5fa!important;
+}
+html[data-theme="light"] .app-window .app-nav span.active{
+ color:#bfdbfe!important;background:#0755a5!important;
+}
+html[data-theme="light"] .app-window .workspace-import-card{
+ background:#0d2142!important;border-color:#29476f!important;
+}
+html[data-theme="light"] .app-window .workspace-import-drop{
+ background:#102747!important;border-color:#4382b5!important;
+}
+html[data-theme="light"] .app-window .workspace-import-select,
+html[data-theme="light"] .app-window .workspace-search,
+html[data-theme="light"] .app-window .workspace-form input,
+html[data-theme="light"] .app-window .workspace-form select{
+ background:#0b1e3c!important;color:#93c5fd!important;border-color:#35547d!important;
+}
+html[data-theme="light"] .app-window .workspace-action,
+html[data-theme="light"] .app-window .workspace-table button{
+ color:#bfdbfe!important;
+}
+
 </style>
 </head>
 <body>
