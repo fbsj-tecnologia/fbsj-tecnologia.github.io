@@ -741,6 +741,139 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 .app-window.prototype-theme-light .app-table .wait{color:#9a6500!important}
 .app-window.prototype-theme-light .demo-tag{color:#0876a8!important}
 
+
+/* Correção de contraste e componentes do protótipo nos dois temas.
+   O tema é isolado por .app-window e não depende das variáveis do site. */
+.app-window.prototype-theme-dark{
+ --panel:#102846;--surface:#0b1f39;--line:#315078;--muted:#a9bfdc;
+ color-scheme:dark!important;
+}
+.app-window.prototype-theme-dark .workspace-import-card{
+ background:#102846!important;border:1px solid #315078!important;color:#eaf4ff!important;
+}
+.app-window.prototype-theme-dark .workspace-import-heading,
+.app-window.prototype-theme-dark .workspace-import-heading b,
+.app-window.prototype-theme-dark .workspace-import-label,
+.app-window.prototype-theme-dark .workspace-import-drop b,
+.app-window.prototype-theme-dark .workspace-import-symbol{color:#eaf4ff!important}
+.app-window.prototype-theme-dark .workspace-import-heading span,
+.app-window.prototype-theme-dark .workspace-import-note,
+.app-window.prototype-theme-dark .workspace-import-drop span{color:#b6c9e2!important}
+.app-window.prototype-theme-dark .workspace-import-select{
+ background:#0b1f39!important;color:#eaf4ff!important;border:1px solid #45658e!important;
+}
+.app-window.prototype-theme-dark .workspace-import-drop{
+ background:#0d2342!important;border-color:#4b729e!important;color:#eaf4ff!important;
+}
+.app-window.prototype-theme-dark .workspace-import-drop b{color:#eaf4ff!important}
+.app-window.prototype-theme-dark .workspace-import-card .workspace-feedback{color:#66e2c1!important}
+.app-window.prototype-theme-dark .workspace-action:not(.primary),
+.app-window.prototype-theme-dark .workspace-table button{
+ background:#18385f!important;border:1px solid #45658e!important;color:#eaf4ff!important;
+}
+.app-window.prototype-theme-dark .workspace-export-menu,
+.app-window.prototype-theme-dark .row-action-menu{
+ background:#102747!important;border-color:#45658e!important;
+}
+.app-window.prototype-theme-dark .workspace-export-menu button,
+.app-window.prototype-theme-dark .row-action-menu button{color:#eaf4ff!important}
+.app-window.prototype-theme-dark .workspace-status-options label{
+ background:#0d2342!important;border-color:#45658e!important;color:#eaf4ff!important;
+}
+
+.app-window.prototype-theme-light{
+ --panel:#ffffff;--surface:#f7faff;--line:#cbd8e8;--muted:#536781;
+ color-scheme:light!important;
+}
+.app-window.prototype-theme-light .workspace-import-card{
+ background:#ffffff!important;border:1px solid #cbd8e8!important;color:#172943!important;
+ box-shadow:0 14px 34px rgba(20,45,80,.12)!important;
+}
+.app-window.prototype-theme-light .workspace-import-heading,
+.app-window.prototype-theme-light .workspace-import-heading b,
+.app-window.prototype-theme-light .workspace-import-label,
+.app-window.prototype-theme-light .workspace-import-drop b{color:#172943!important}
+.app-window.prototype-theme-light .workspace-import-heading span,
+.app-window.prototype-theme-light .workspace-import-note,
+.app-window.prototype-theme-light .workspace-import-drop span{color:#536781!important}
+.app-window.prototype-theme-light .workspace-import-select{
+ background:#fff!important;color:#172943!important;border:1px solid #b9c9dd!important;
+}
+.app-window.prototype-theme-light .workspace-import-select option{background:#fff!important;color:#172943!important}
+.app-window.prototype-theme-light .workspace-import-drop{
+ background:#f1f6fc!important;border:1px dashed #9db4d0!important;color:#172943!important;
+}
+.app-window.prototype-theme-light .workspace-import-symbol{color:#087bdf!important}
+.app-window.prototype-theme-light .workspace-import-card .workspace-feedback{color:#08765f!important}
+.app-window.prototype-theme-light .workspace-action:not(.primary),
+.app-window.prototype-theme-light .workspace-table button{
+ background:#e8f0fa!important;border:1px solid #b8c9de!important;color:#17395f!important;
+}
+.app-window.prototype-theme-light .workspace-action.primary,
+.app-window.prototype-theme-light .workspace-import-drop .workspace-action.primary{
+ background:linear-gradient(120deg,#087bdf,#00a9cf)!important;border:0!important;color:#fff!important;
+}
+.app-window.prototype-theme-light .workspace-export-menu,
+.app-window.prototype-theme-light .row-action-menu{
+ background:#fff!important;border:1px solid #cbd8e8!important;box-shadow:0 12px 28px #1b355522!important;
+}
+.app-window.prototype-theme-light .workspace-export-menu button,
+.app-window.prototype-theme-light .row-action-menu button{color:#17395f!important}
+.app-window.prototype-theme-light .workspace-export-menu button:hover,
+.app-window.prototype-theme-light .row-action-menu button:hover{background:#e8f0fa!important}
+.app-window.prototype-theme-light .workspace-status-options label{
+ background:#f5f8fc!important;border-color:#c4d2e3!important;color:#17395f!important;
+}
+.app-window.prototype-theme-light .workspace-status-options label:has(input:checked){
+ background:#e3f1ff!important;border-color:#1686d9!important;color:#075a9d!important;
+}
+.app-window.prototype-theme-light .workspace-form{
+ background:#fff!important;border-color:#cbd8e8!important;
+}
+.app-window.prototype-theme-light .workspace-form input,
+.app-window.prototype-theme-light .workspace-form select,
+.app-window.prototype-theme-light .workspace-search{
+ background:#fff!important;color:#172943!important;border-color:#b9c9dd!important;
+}
+.app-window.prototype-theme-light .workspace-form input::placeholder,
+.app-window.prototype-theme-light .workspace-search::placeholder{color:#74869d!important}
+.app-window.prototype-theme-light .workspace-stat{
+ background:#fff!important;border-color:#d4deeb!important;
+}
+.app-window.prototype-theme-light .workspace-stat small{color:#536781!important}
+.app-window.prototype-theme-light .workspace-stat b{color:#172943!important}
+.app-window.prototype-theme-light .workspace-empty{color:#536781!important}
+.app-window.prototype-theme-light .workspace-table th{
+ background:#e8f0fa!important;color:#17395f!important;border-color:#cbd8e8!important;
+}
+.app-window.prototype-theme-light .workspace-table td{
+ background:#fff!important;color:#405875!important;border-color:#dbe4ef!important;
+}
+.app-window.prototype-theme-light .workspace-table tr:hover td{background:#f2f7fd!important}
+.app-window.prototype-theme-light .workspace-table button{
+ background:#e8f0fa!important;color:#17395f!important;border-color:#b8c9de!important;
+}
+.app-window.prototype-theme-light .workspace-table button.danger,
+.app-window.prototype-theme-light .row-action-menu button.danger{color:#b42318!important}
+.app-window.prototype-theme-light .prototype-theme-toggle{
+ background:#e8f2fc!important;border-color:#9bb8d8!important;color:#17395f!important;
+}
+.app-window.prototype-theme-light .prototype-theme-toggle:hover{
+ background:#d7eaff!important;border-color:#1686d9!important;
+}
+.app-window.prototype-theme-light .fullscreen-toggle{
+ background:#e8f2fc!important;border-color:#9bb8d8!important;color:#17395f!important;
+}
+.app-window.prototype-theme-light .fullscreen-toggle:hover{
+ background:#d7eaff!important;border-color:#1686d9!important;
+}
+.app-window.prototype-theme-dark .prototype-theme-toggle,
+.app-window.prototype-theme-dark .fullscreen-toggle{
+ background:#123967!important;border-color:#4b8bc5!important;color:#fff!important;
+}
+.app-window.prototype-theme-dark .prototype-theme-toggle *,
+.app-window.prototype-theme-dark .fullscreen-toggle *{color:#fff!important}
+
 </style>
 </head>
 <body>
