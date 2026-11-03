@@ -306,6 +306,14 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 }
 
 
+/* Confirmação visual após uma importação bem-sucedida */
+.workspace-import-success{text-align:center;padding:4px 2px 2px}
+.workspace-import-success-icon{width:58px;height:58px;margin:0 auto 14px;display:grid;place-items:center;border-radius:50%;background:#0c9b70;color:#fff;font-size:32px;font-weight:800;box-shadow:0 0 0 7px rgba(12,155,112,.13)}
+.workspace-import-success h4{margin:0 0 9px;font-size:18px;color:inherit}
+.workspace-import-success p{margin:7px 0;color:inherit;line-height:1.55;font-size:13px}
+.workspace-import-success-file{opacity:.72;font-size:12px!important;overflow-wrap:anywhere}
+.app-window.prototype-theme-light .workspace-import-success-icon{background:#07875f}
+.app-window.prototype-theme-dark .workspace-import-success-icon{background:#0caa7b}
 /* Modais reutilizáveis para todas as telas de cadastro */
 .workspace-modal[hidden]{display:none!important}
 .workspace-modal{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;padding:18px;box-sizing:border-box}
@@ -1394,6 +1402,7 @@ document.querySelectorAll('.app-window').forEach(app=>{
    const parsed=await readImportFile(file);
    const result=mapImportedRows(panel.id,target,parsed.headers,parsed.records);
    feedback.textContent='✓ '+result.imported+' registro(s) importado(s) para '+target+'. Acesse essa aba para visualizar os dados.';
+   showRecordModal(screen,'Importação concluída',`<div class="workspace-import-success"><div class="workspace-import-success-icon" aria-hidden="true">✓</div><h4>Arquivo importado com sucesso!</h4><p><strong>${result.imported}</strong> registro(s) foram adicionados ao cadastro <strong>${esc(target)}</strong>.</p><p class="workspace-import-success-file">Arquivo: ${esc(file.name)}</p><div class="workspace-modal-actions"><button type="button" class="workspace-action primary" data-modal-close>Concluir</button></div></div>`);
   }catch(error){feedback.textContent='Não foi possível importar: '+error.message}
   input.value='';
  });
