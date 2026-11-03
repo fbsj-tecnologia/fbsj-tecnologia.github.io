@@ -369,6 +369,14 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 .workspace-status-options input{width:16px;height:16px;margin:0;accent-color:#00bfe8}
 .workspace-status-options label:has(input:checked){border-color:#00bfe8;background:#123967;box-shadow:0 0 0 1px #00bfe833}
 
+
+/* Opções de exportação */
+.workspace-export{position:relative}
+.workspace-export-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:60;min-width:142px;padding:5px;background:#102747;border:1px solid #35547d;border-radius:9px;box-shadow:0 12px 28px #0008}
+.workspace-export-menu[hidden]{display:none}
+.workspace-export-menu button{display:block;width:100%;padding:9px 10px;border:0;border-radius:6px;background:transparent;color:#eaf4ff;text-align:left;font:600 10px var(--font);cursor:pointer}
+.workspace-export-menu button:hover{background:#1b4775}
+
 </style>
 </head>
 <body>
@@ -491,11 +499,65 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   if(label===defaultLabels[panel.id]){content.innerHTML=originals.get(panel.id);wireUpload(panel);return}
   const config=data||{stats:[['Registros','24'],['Atualizados','Hoje'],['Situação','Ativa']],cols:['Nome','Descrição','Atualização','Status'],rows:[[label+' de exemplo','Registro demonstrativo','Hoje','Ativo'],['Item de demonstração','Informação ilustrativa','Ontem','Ativo']]};
   const title=panel.querySelector('.app-title')?.textContent||'Área de gestão';
-  content.innerHTML=`<div class="app-top"><div><div class="app-title">${esc(label)}</div><div class="app-sub">${esc(title)} · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="workspace-screen"><div class="workspace-grid">${config.stats.map(s=>`<div class="workspace-stat"><small>${esc(s[0])}</small><b>${esc(s[1])}</b></div>`).join('')}</div><div class="workspace-toolbar"><input class="workspace-search" type="search" placeholder="Pesquisar em ${esc(label.toLowerCase())}..." aria-label="Pesquisar ${esc(label)}"><button class="workspace-action primary" data-new>＋ Novo cadastro</button><button class="workspace-action" data-export>Exportar CSV</button></div><div class="workspace-modal" data-workspace-modal hidden aria-hidden="true"></div><div class="workspace-feedback" aria-live="polite">Exibindo dados fictícios para demonstração.</div><div data-table>${makeTable(config.cols,config.rows)}</div></div>`;
+  content.innerHTML=`<div class="app-top"><div><div class="app-title">${esc(label)}</div><div class="app-sub">${esc(title)} · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="workspace-screen"><div class="workspace-grid">${config.stats.map(s=>`<div class="workspace-stat"><small>${esc(s[0])}</small><b>${esc(s[1])}</b></div>`).join('')}</div><div class="workspace-toolbar"><input class="workspace-search" type="search" placeholder="Pesquisar em ${esc(label.toLowerCase())}..." aria-label="Pesquisar ${esc(label)}"><button class="workspace-action primary" data-new>＋ Novo cadastro</button><div class="workspace-export"><button class="workspace-action" type="button" data-export-toggle aria-expanded="false">Exportar ▾</button><div class="workspace-export-menu" data-export-menu hidden><button type="button" data-export-format="xlsx">Excel (.xlsx)</button><button type="button" data-export-format="csv">CSV (.csv)</button><button type="button" data-export-format="pdf">PDF (.pdf)</button></div></div></div><div class="workspace-modal" data-workspace-modal hidden aria-hidden="true"></div><div class="workspace-feedback" aria-live="polite">Exibindo dados fictícios para demonstração.</div><div data-table>${makeTable(config.cols,config.rows)}</div></div>`;
  }
  function wireUpload(panel){
   const input=panel.querySelector('#excelFile');if(!input)return;
   // The original import handler remains attached in the page's first script; restore its status on return.
+ }
+
+ function exportGridData(screen){
+  const table=screen.querySelector('.workspace-table');
+  const headers=[...table.querySelectorAll('thead th')].slice(0,-1).map(th=>th.textContent.trim());
+  const rows=[...table.querySelectorAll('tbody tr')].map(tr=>[...tr.querySelectorAll('td')].slice(0,-1).map(td=>td.textContent.trim()));
+  return {headers,rows,logo:document.querySelector('.brand-mark img')?.src||document.querySelector('.brand img')?.src||'',date:new Date().toLocaleDateString('pt-BR')};
+ }
+ function downloadBlob(blob,name){
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ }
+ function loadExportLibrary(src,globalName){
+  if(window[globalName])return Promise.resolve(window[globalName]);
+  return new Promise((resolve,reject)=>{
+   const existing=[...document.scripts].find(x=>x.src===src);
+   if(existing){existing.addEventListener('load',()=>resolve(window[globalName]),{once:true});existing.addEventListener('error',reject,{once:true});return}
+   const script=document.createElement('script');script.src=src;script.onload=()=>window[globalName]?resolve(window[globalName]):reject(new Error('Biblioteca não carregada'));script.onerror=()=>reject(new Error('Falha ao carregar biblioteca de exportação'));document.head.appendChild(script);
+  });
+ }
+ async function exportGrid(screen,format){
+  const {headers,rows,logo,date}=exportGridData(screen);
+  const safe=(value)=>String(value??'').replace(/[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F]/g,'').trim();
+  const filename='FBSJ_'+(screen.closest('.workspace-screen')?.querySelector('.app-title')?.textContent.trim()||'Relatorio').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_');
+  if(format==='csv'){
+   const quote=v=>'"'+safe(v).replace(/"/g,'""')+'"';
+   const lines=[['FBSJ Tecnologia'],['Relatório demonstrativo',date],[],headers.map(quote).join(';'),...rows.map(row=>row.map(quote).join(';'))];
+   downloadBlob(new Blob(['\\uFEFF'+lines.map(line=>Array.isArray(line)?line.map(quote).join(';'):line).join('\\r\\n')],{type:'text/csv;charset=utf-8;'}),filename+'.csv');
+   return 'CSV exportado. O formato CSV não permite incorporar a imagem da logo; a identificação FBSJ consta no cabeçalho.';
+  }
+  if(format==='xlsx'){
+   const ExcelJS=await loadExportLibrary('https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js','ExcelJS');
+   const workbook=new ExcelJS.Workbook();workbook.creator='FBSJ Tecnologia';workbook.created=new Date();
+   const sheet=workbook.addWorksheet('Relatório',{views:[{state:'frozen',ySplit:5}]});
+   sheet.columns=headers.map((h,i)=>({header:h,key:'c'+i,width:Math.max(18,Math.min(34,h.length+8))}));
+   sheet.mergeCells(1,1,1,Math.max(3,headers.length));sheet.getCell('A1').value='FBSJ Tecnologia';sheet.getCell('A1').font={bold:true,size:18,color:{argb:'FF087BDF'}};
+   sheet.mergeCells(2,1,2,Math.max(3,headers.length));sheet.getCell('A2').value='Relatório demonstrativo · '+date;sheet.getCell('A2').font={size:10,color:{argb:'FF526783'}};
+   if(logo.startsWith('data:image/')){const imageId=workbook.addImage({base64:logo.split(',')[1],extension:logo.includes('image/jpeg')?'jpeg':'png'});sheet.addImage(imageId,{tl:{col:0,row:0},ext:{width:64,height:64}});sheet.getRow(1).height=52;sheet.getRow(2).height=20;}
+   const headerRow=sheet.getRow(5);headers.forEach((h,i)=>{const c=headerRow.getCell(i+1);c.value=safe(h);c.font={bold:true,color:{argb:'FFFFFFFF'}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF123967'}};c.alignment={vertical:'middle'};});headerRow.height=24;
+   rows.forEach(row=>{const cells=sheet.addRow(row.map(safe));cells.eachCell(c=>{c.alignment={vertical:'middle',wrapText:true};c.border={bottom:{style:'thin',color:{argb:'FFD9E2EF'}}};});});
+   sheet.autoFilter={from:{row:5,column:1},to:{row:5+rows.length,column:headers.length}};
+   const buffer=await workbook.xlsx.writeBuffer();downloadBlob(new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),filename+'.xlsx');
+   return 'Arquivo Excel exportado com a logo FBSJ no cabeçalho.';
+  }
+  if(format==='pdf'){
+   const {jsPDF}=await loadExportLibrary('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js','jspdf');
+   await loadExportLibrary('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js','jspdf');
+   const doc=new jsPDF({orientation:headers.length>5?'landscape':'portrait',unit:'mm',format:'a4'});
+   if(logo.startsWith('data:image/'))doc.addImage(logo,'PNG',14,10,18,18);
+   doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(8,75,140);doc.text('FBSJ Tecnologia',38,18);
+   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(80,98,120);doc.text('Relatório demonstrativo · '+date,38,24);
+   doc.autoTable({startY:34,head:[headers.map(safe)],body:rows.map(row=>row.map(safe)),theme:'grid',styles:{font:'helvetica',fontSize:8,cellPadding:3,overflow:'linebreak'},headStyles:{fillColor:[18,57,103],textColor:255},alternateRowStyles:{fillColor:[239,245,252]},margin:{left:14,right:14}});
+   doc.save(filename+'.pdf');return 'PDF exportado com a logo FBSJ no cabeçalho.';
+  }
+  throw new Error('Formato de exportação inválido.');
  }
  function closeRecordModal(screen){
   const modal=screen?.querySelector('[data-workspace-modal]');if(!modal)return;
@@ -522,6 +584,22 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
  document.addEventListener('click',e=>{
   const nav=e.target.closest('.app-nav span');
   if(nav){const panel=nav.closest('.demo-panel');panel.querySelectorAll('.app-nav span').forEach(x=>x.classList.toggle('active',x===nav));openModule(panel,nav.textContent.trim());return}
+  const exportToggle=e.target.closest('[data-export-toggle]');
+  if(exportToggle){
+   const menu=exportToggle.parentElement.querySelector('[data-export-menu]'),open=menu.hidden;
+   document.querySelectorAll('[data-export-menu]').forEach(m=>m.hidden=true);
+   document.querySelectorAll('[data-export-toggle]').forEach(b=>b.setAttribute('aria-expanded','false'));
+   menu.hidden=!open;exportToggle.setAttribute('aria-expanded',String(open));return;
+  }
+  const exportOption=e.target.closest('[data-export-format]');
+  if(exportOption){
+   const screen=exportOption.closest('.workspace-screen'),format=exportOption.dataset.exportFormat,feedback=screen.querySelector('.workspace-feedback');
+   exportOption.closest('[data-export-menu]').hidden=true;
+   exportOption.closest('.workspace-export').querySelector('[data-export-toggle]').setAttribute('aria-expanded','false');
+   feedback.textContent='Preparando arquivo...';
+   exportGrid(screen,format).then(message=>{feedback.textContent='✓ '+message}).catch(error=>{feedback.textContent='Não foi possível exportar: '+error.message});
+   return;
+  }
   const menuToggle=e.target.closest('[data-menu-toggle]');
   if(menuToggle){
    const cell=menuToggle.closest('.row-actions'),menu=cell.querySelector('.row-action-menu'),willOpen=menu.hidden;
@@ -565,11 +643,7 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   if(action.hasAttribute('data-new')){
    showRecordModal(screen,'Novo cadastro',editorContent(screen));return;
   }
-  if(action.hasAttribute('data-export')){
-   const table=screen.querySelector('.workspace-table');if(!table)return;
-   const lines=[...table.querySelectorAll('tr')].map(tr=>[...tr.children].slice(0,-1).map(td=>'"'+td.textContent.replace(/"/g,'""')+'"').join(';'));
-   const blob=new Blob(['\\ufeff'+lines.join('\\r\\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='relatorio-demonstracao-fbsj.csv';a.click();URL.revokeObjectURL(url);feedback.textContent='✓ Relatório CSV exportado.';return;
-  }
+
   if(action.hasAttribute('data-record-action')){
    const row=action.closest('tr'),kind=action.dataset.recordAction;
    action.closest('.row-action-menu').hidden=true;
