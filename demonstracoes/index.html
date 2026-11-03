@@ -1151,6 +1151,26 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .app-window > .fullscreen-toggle::before{font-size:21px!important}
 }
 
+
+/* Botão expandir/recolher mobile: usa exclusivamente o SVG alternado pelo JavaScript */
+@media(max-width:760px){
+ .app-window > .fullscreen-toggle::before,
+ .app-window > .fullscreen-toggle::after{
+  content:none!important;display:none!important;
+ }
+ .app-window > .fullscreen-toggle svg{
+  display:block!important;width:21px!important;height:21px!important;
+  min-width:21px!important;min-height:21px!important;
+ }
+ .app-window > .fullscreen-toggle span{display:none!important}
+}
+@media(max-width:420px){
+ .app-window > .fullscreen-toggle svg{
+  width:20px!important;height:20px!important;
+  min-width:20px!important;min-height:20px!important;
+ }
+}
+
 </style>
 </head>
 <body>
