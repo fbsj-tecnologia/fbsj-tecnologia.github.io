@@ -588,6 +588,16 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
    }
   }
  });
+ document.addEventListener('dblclick',e=>{
+  const row=e.target.closest('.workspace-table tbody tr');
+  if(!row||e.target.closest('.row-actions'))return;
+  const screen=row.closest('.workspace-screen');
+  if(!screen)return;
+  const headers=[...screen.querySelectorAll('.workspace-table thead th')].slice(0,-1);
+  const values=[...row.querySelectorAll('td')].slice(0,-1);
+  const details=headers.map((header,i)=>`<div class="workspace-detail-item"><span>${esc(header.textContent.trim())}</span><strong>${esc(values[i]?.textContent.trim()||'—')}</strong></div>`).join('');
+  showRecordModal(screen,'Detalhes do cadastro',`<div class="workspace-detail-list">${details}</div><div class="workspace-modal-actions"><button type="button" class="workspace-action" data-modal-close>Fechar</button><button type="button" class="workspace-action primary" data-modal-edit>Editar cadastro</button></div>`,row);
+ });
  document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
    const modal=document.querySelector('[data-workspace-modal]:not([hidden])');
