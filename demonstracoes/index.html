@@ -212,6 +212,21 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .fullscreen-toggle span{display:none}
 }
 
+
+/* Refinos visuais: controle de tela cheia mais compacto e selo ligeiramente mais baixo */
+.fullscreen-toggle{min-height:31px;padding:0 9px;gap:5px}
+.fullscreen-toggle svg{width:18px;height:18px}
+.demo-tag{transform:translateY(7px)}
+@media(max-width:760px){
+ .fullscreen-toggle{min-height:27px;padding:0 7px}
+ .fullscreen-toggle svg{width:16px;height:16px}
+}
+@media(max-width:420px){
+ .fullscreen-toggle{min-height:26px;padding:0 6px}
+ .fullscreen-toggle svg{width:15px;height:15px}
+ .demo-tag{transform:translateY(8px)}
+}
+
 </style>
 </head>
 <body>
