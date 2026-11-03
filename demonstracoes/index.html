@@ -1104,6 +1104,36 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .app-window > .prototype-theme-toggle:not(.in-site-header){right:45px!important}
 }
 
+
+/* Correção dos controles mobile: ícone único de expandir e tema lado a lado */
+@media(max-width:760px){
+ .app-window > .fullscreen-toggle{
+  top:10px!important;right:8px!important;left:auto!important;
+  width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;
+  padding:0!important;font-size:0!important;gap:0!important;
+ }
+ .app-window > .fullscreen-toggle::before{content:""!important;display:none!important}
+ .app-window > .fullscreen-toggle span{display:none!important}
+ .app-window > .fullscreen-toggle::after{
+  content:"";width:17px;height:17px;display:block;
+  border:2px solid currentColor;border-radius:2px;
+  clip-path:polygon(0 0,40% 0,40% 12%,12% 12%,12% 40%,0 40%,0 0,100% 0,100% 40%,88% 40%,88% 12%,60% 12%,60% 0,100% 0,100% 100%,60% 100%,60% 88%,88% 88%,88% 60%,100% 60%,100% 100%,0 100%,0 60%,12% 60%,12% 88%,40% 88%,40% 100%,0 100%);
+ }
+ .app-window > .prototype-theme-toggle:not(.in-site-header){
+  top:10px!important;right:50px!important;left:auto!important;
+  width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;
+  padding:0!important;font-size:0!important;gap:0!important;
+ }
+ .app-window > .prototype-theme-toggle:not(.in-site-header) .theme-icon{display:block!important;font-size:18px!important}
+ .app-window > .prototype-theme-toggle:not(.in-site-header) .theme-label{display:none!important}
+ .app-window .app-content{padding-top:82px!important}
+}
+@media(max-width:420px){
+ .app-window > .fullscreen-toggle{top:9px!important;right:7px!important;width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important}
+ .app-window > .prototype-theme-toggle:not(.in-site-header){top:9px!important;right:45px!important;width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important}
+ .app-window .app-content{padding:82px 7px 13px!important}
+}
+
 </style>
 </head>
 <body>
