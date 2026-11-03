@@ -174,6 +174,44 @@ html:not([data-theme="dark"]) .foot,html[data-theme="light"] .foot{color:#71809A
 @media(max-width:420px){.site-nav{width:min(88vw,360px);padding-left:22px;padding-right:22px}.menu-toggle{width:44px;height:44px}}
 body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-index:55}
 
+
+
+/* Tela cheia individual para cada modelo de demonstração */
+.app-window{position:relative}
+.fullscreen-toggle{
+ position:absolute;z-index:8;top:10px;right:10px;
+ display:inline-flex;align-items:center;justify-content:center;gap:6px;
+ min-height:34px;padding:0 11px;border:1px solid #4b8bc5;border-radius:9px;
+ background:#123967;color:#fff;font:700 11px var(--font);
+ box-shadow:0 4px 14px #0003;white-space:nowrap
+}
+.fullscreen-toggle:hover{background:#087bdf;border-color:#00d4ff}
+.app-window:fullscreen{
+ width:100vw!important;max-width:none!important;height:100vh!important;height:100dvh!important;
+ min-height:100vh!important;min-height:100dvh!important;border:0;border-radius:0;
+ overflow:auto;grid-template-columns:minmax(155px,18vw) minmax(0,1fr)
+}
+.app-window:fullscreen .app-content{overflow:auto;padding:clamp(18px,3vw,42px)}
+.app-window:fullscreen .workspace-screen{min-height:calc(100vh - 130px)}
+.app-window:fullscreen .fullscreen-toggle{position:sticky;float:right;top:10px;margin:10px 10px -44px 0}
+.app-window.demo-fullscreen-fallback{
+ position:fixed!important;inset:0!important;z-index:99999!important;
+ width:100vw!important;max-width:none!important;height:100vh!important;height:100dvh!important;
+ min-height:100vh!important;min-height:100dvh!important;border:0!important;border-radius:0!important;
+ overflow:auto!important;grid-template-columns:minmax(155px,18vw) minmax(0,1fr)!important
+}
+.app-window.demo-fullscreen-fallback .app-content{overflow:auto;padding:clamp(18px,3vw,42px)}
+.app-window.demo-fullscreen-fallback .fullscreen-toggle{position:sticky;float:right;top:10px;margin:10px 10px -44px 0}
+@media(max-width:760px){
+ .fullscreen-toggle{top:7px;right:7px;min-height:29px;padding:0 8px;font-size:9px}
+ .app-window:fullscreen,.app-window.demo-fullscreen-fallback{grid-template-columns:92px minmax(0,1fr)!important}
+ .app-window:fullscreen .app-content,.app-window.demo-fullscreen-fallback .app-content{padding:14px 10px}
+}
+@media(max-width:420px){
+ .app-window:fullscreen,.app-window.demo-fullscreen-fallback{grid-template-columns:75px minmax(0,1fr)!important}
+ .fullscreen-toggle span{display:none}
+}
+
 </style>
 </head>
 <body>
@@ -195,7 +233,7 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 </div></div>
 
 <section class="demo-panel active" id="panel-contabil" role="tabpanel" aria-labelledby="tab-contabil">
-<article class="demo-card"><div class="preview"><div class="app-window">
+<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button>
 <aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Painel</span><span>Clientes</span><span>Financeiro</span><span>Obrigações</span><span>Relatórios</span><span>Importação</span></div></aside>
 <div class="app-content"><div class="app-top"><div><div class="app-title">Painel de gestão contábil</div><div class="app-sub">Visão financeira · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div>
 <div class="app-kpis"><div class="app-kpi"><small>Receita mensal</small><b id="miniRevenue">R$ 48,7 mil</b><em>▲ 12,8%</em></div><div class="app-kpi"><small>Despesas</small><b>R$ 18,4 mil</b><em>▼ 3,2%</em></div><div class="app-kpi"><small>Resultado</small><b>R$ 30,3 mil</b><em>▲ 16,4%</em></div><div class="app-kpi"><small>Clientes ativos</small><b>128</b><em>▲ 8 novos</em></div></div>
@@ -206,19 +244,19 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 </section>
 
 <section class="demo-panel" id="panel-empresarial" role="tabpanel" aria-labelledby="tab-empresarial">
-<article class="demo-card"><div class="preview"><div class="app-window"><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Painel</span><span>Vendas</span><span>Financeiro</span><span>Estoque</span><span>Relatórios</span><span>Configurações</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Dashboard de gestão empresarial</div><div class="app-sub">Visão consolidada · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-kpis"><div class="app-kpi"><small>Pedidos no mês</small><b>1.284</b><em>▲ 12%</em></div><div class="app-kpi"><small>Ticket médio</small><b>R$ 412</b><em>▲ 4%</em></div><div class="app-kpi"><small>Prazo médio</small><b>2,3 d</b><em>▼ 0,4 d</em></div><div class="app-kpi"><small>Satisfação</small><b>94%</b><em>▲ 2 p.p.</em></div></div><div class="app-charts"><div class="app-chart"><div class="chart-label">Faturamento por mês</div><div class="bar-chart"><i style="height:35%"></i><i style="height:43%"></i><i style="height:50%"></i><i style="height:48%"></i><i style="height:65%"></i><i style="height:61%"></i><i style="height:76%"></i><i style="height:70%"></i><i style="height:85%"></i><i style="height:96%"></i></div></div><div class="app-chart"><div class="chart-label">Vendas por canal</div><div class="donut-demo"></div></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Dashboard de gestão empresarial</h2><p>Indicadores, gráficos e relatórios para acompanhar vendas, financeiro, estoque e desempenho da empresa em um só lugar.</p><div class="tech">Angular&nbsp; · &nbsp;.NET&nbsp; · &nbsp;SQL Server</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20dashboard%20empresarial">Quero uma solução assim →</a></div></div></article>
+<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Painel</span><span>Vendas</span><span>Financeiro</span><span>Estoque</span><span>Relatórios</span><span>Configurações</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Dashboard de gestão empresarial</div><div class="app-sub">Visão consolidada · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-kpis"><div class="app-kpi"><small>Pedidos no mês</small><b>1.284</b><em>▲ 12%</em></div><div class="app-kpi"><small>Ticket médio</small><b>R$ 412</b><em>▲ 4%</em></div><div class="app-kpi"><small>Prazo médio</small><b>2,3 d</b><em>▼ 0,4 d</em></div><div class="app-kpi"><small>Satisfação</small><b>94%</b><em>▲ 2 p.p.</em></div></div><div class="app-charts"><div class="app-chart"><div class="chart-label">Faturamento por mês</div><div class="bar-chart"><i style="height:35%"></i><i style="height:43%"></i><i style="height:50%"></i><i style="height:48%"></i><i style="height:65%"></i><i style="height:61%"></i><i style="height:76%"></i><i style="height:70%"></i><i style="height:85%"></i><i style="height:96%"></i></div></div><div class="app-chart"><div class="chart-label">Vendas por canal</div><div class="donut-demo"></div></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Dashboard de gestão empresarial</h2><p>Indicadores, gráficos e relatórios para acompanhar vendas, financeiro, estoque e desempenho da empresa em um só lugar.</p><div class="tech">Angular&nbsp; · &nbsp;.NET&nbsp; · &nbsp;SQL Server</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20dashboard%20empresarial">Quero uma solução assim →</a></div></div></article>
 </section>
 
 <section class="demo-panel" id="panel-integracao" role="tabpanel" aria-labelledby="tab-integracao">
-<article class="demo-card"><div class="preview"><div class="app-window"><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Fluxos</span><span>Conectores</span><span>Filas</span><span>Logs</span><span>APIs</span><span>Chaves</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Plataforma de integração</div><div class="app-sub">Sincronização entre sistemas · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-chart" style="min-height:190px"><div class="chart-label">Mapa de integrações</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:10px;text-align:center;height:135px"><div style="display:grid;gap:10px"><span class="app-kpi">ERP</span><span class="app-kpi">CRM</span><span class="app-kpi">E-commerce</span></div><div style="background:linear-gradient(135deg,#007bff,#00d4ff);border-radius:12px;padding:18px 5px;font-weight:800;font-size:13px;box-shadow:0 0 25px #007bff66">API<br><small style="font-size:8px">REST · .NET</small></div><div style="display:grid;gap:10px"><span class="app-kpi">Portal</span><span class="app-kpi">Financeiro</span><span class="app-kpi">Estoque</span></div></div></div><div class="app-table"><div class="app-table-head"><span>Fluxo</span><span>Origem → Destino</span><span>Execução</span><span>Status</span></div><div class="app-table-row"><span>Pedidos</span><span>E-commerce → ERP</span><span>há 2 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Clientes</span><span>CRM → ERP</span><span>há 5 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Financeiro</span><span>ERP → Portal</span><span>há 8 min</span><span class="ok">OK</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Plataforma de integração de sistemas</h2><p>Hub de APIs que conecta ERP, CRM, e-commerce e plataformas internas, sincronizando pedidos, estoque e financeiro com rastreabilidade.</p><div class="tech">C#&nbsp; · &nbsp;APIs REST&nbsp; · &nbsp;Oracle&nbsp; · &nbsp;.NET</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20integra%C3%A7%C3%A3o%20de%20sistemas">Quero uma solução assim →</a></div></div></article>
+<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Fluxos</span><span>Conectores</span><span>Filas</span><span>Logs</span><span>APIs</span><span>Chaves</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Plataforma de integração</div><div class="app-sub">Sincronização entre sistemas · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-chart" style="min-height:190px"><div class="chart-label">Mapa de integrações</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:10px;text-align:center;height:135px"><div style="display:grid;gap:10px"><span class="app-kpi">ERP</span><span class="app-kpi">CRM</span><span class="app-kpi">E-commerce</span></div><div style="background:linear-gradient(135deg,#007bff,#00d4ff);border-radius:12px;padding:18px 5px;font-weight:800;font-size:13px;box-shadow:0 0 25px #007bff66">API<br><small style="font-size:8px">REST · .NET</small></div><div style="display:grid;gap:10px"><span class="app-kpi">Portal</span><span class="app-kpi">Financeiro</span><span class="app-kpi">Estoque</span></div></div></div><div class="app-table"><div class="app-table-head"><span>Fluxo</span><span>Origem → Destino</span><span>Execução</span><span>Status</span></div><div class="app-table-row"><span>Pedidos</span><span>E-commerce → ERP</span><span>há 2 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Clientes</span><span>CRM → ERP</span><span>há 5 min</span><span class="ok">OK</span></div><div class="app-table-row"><span>Financeiro</span><span>ERP → Portal</span><span>há 8 min</span><span class="ok">OK</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Plataforma de integração de sistemas</h2><p>Hub de APIs que conecta ERP, CRM, e-commerce e plataformas internas, sincronizando pedidos, estoque e financeiro com rastreabilidade.</p><div class="tech">C#&nbsp; · &nbsp;APIs REST&nbsp; · &nbsp;Oracle&nbsp; · &nbsp;.NET</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20integra%C3%A7%C3%A3o%20de%20sistemas">Quero uma solução assim →</a></div></div></article>
 </section>
 
 <section class="demo-panel" id="panel-automacao" role="tabpanel" aria-labelledby="tab-automacao">
-<article class="demo-card"><div class="preview"><div class="app-window"><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Aprovações</span><span>Tarefas</span><span>Regras</span><span>Agendamentos</span><span>Histórico</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Automação de processos</div><div class="app-sub">Fluxo de aprovação de compras · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-kpis"><div class="app-kpi"><small>Etapa 1</small><b>Solicitação</b><em class="ok">Concluída</em></div><div class="app-kpi"><small>Etapa 2</small><b>Validação</b><em class="ok">Concluída</em></div><div class="app-kpi"><small>Etapa 3</small><b>Aprovação</b><em class="wait">Em andamento</em></div><div class="app-kpi"><small>Etapa 4</small><b>Emissão</b><em>Automática</em></div></div><div class="app-table" style="margin-top:12px"><div class="app-table-head"><span>Solicitação</span><span>Responsável</span><span>Regra aplicada</span><span>Status</span></div><div class="app-table-row"><span>#1042</span><span>Compras</span><span>Valor acima do limite</span><span class="wait">Aguardando</span></div><div class="app-table-row"><span>#1041</span><span>Operações</span><span>Aprovação automática</span><span class="ok">Aprovado</span></div><div class="app-table-row"><span>#1040</span><span>TI</span><span>Fornecedor homologado</span><span class="ok">Aprovado</span></div><div class="app-table-row"><span>#1039</span><span>Financeiro</span><span>Checagem de orçamento</span><span class="ok">Processado</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Sistema de automação de processos</h2><p>Fluxos de aprovação, regras de negócio, notificações e tarefas automatizadas que substituem rotinas manuais e dão visibilidade a cada etapa.</p><div class="tech">.NET&nbsp; · &nbsp;JavaScript&nbsp; · &nbsp;SQL Server</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20automa%C3%A7%C3%A3o%20de%20processos">Quero uma solução assim →</a></div></div></article>
+<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Aprovações</span><span>Tarefas</span><span>Regras</span><span>Agendamentos</span><span>Histórico</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Automação de processos</div><div class="app-sub">Fluxo de aprovação de compras · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-kpis"><div class="app-kpi"><small>Etapa 1</small><b>Solicitação</b><em class="ok">Concluída</em></div><div class="app-kpi"><small>Etapa 2</small><b>Validação</b><em class="ok">Concluída</em></div><div class="app-kpi"><small>Etapa 3</small><b>Aprovação</b><em class="wait">Em andamento</em></div><div class="app-kpi"><small>Etapa 4</small><b>Emissão</b><em>Automática</em></div></div><div class="app-table" style="margin-top:12px"><div class="app-table-head"><span>Solicitação</span><span>Responsável</span><span>Regra aplicada</span><span>Status</span></div><div class="app-table-row"><span>#1042</span><span>Compras</span><span>Valor acima do limite</span><span class="wait">Aguardando</span></div><div class="app-table-row"><span>#1041</span><span>Operações</span><span>Aprovação automática</span><span class="ok">Aprovado</span></div><div class="app-table-row"><span>#1040</span><span>TI</span><span>Fornecedor homologado</span><span class="ok">Aprovado</span></div><div class="app-table-row"><span>#1039</span><span>Financeiro</span><span>Checagem de orçamento</span><span class="ok">Processado</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Sistema de automação de processos</h2><p>Fluxos de aprovação, regras de negócio, notificações e tarefas automatizadas que substituem rotinas manuais e dão visibilidade a cada etapa.</p><div class="tech">.NET&nbsp; · &nbsp;JavaScript&nbsp; · &nbsp;SQL Server</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20automa%C3%A7%C3%A3o%20de%20processos">Quero uma solução assim →</a></div></div></article>
 </section>
 
 <section class="demo-panel" id="panel-operacional" role="tabpanel" aria-labelledby="tab-operacional">
-<article class="demo-card"><div class="preview"><div class="app-window"><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Ordens</span><span>Equipes</span><span>Agenda</span><span>Mapa</span><span>Indicadores</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Gestão operacional</div><div class="app-sub">Ordens de serviço · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-kpis"><div class="app-kpi"><small>Abertas</small><b>36</b><em>Hoje</em></div><div class="app-kpi"><small>Em execução</small><b>14</b><em>Equipes ativas</em></div><div class="app-kpi"><small>Concluídas hoje</small><b>22</b><em class="ok">+ 8%</em></div><div class="app-kpi"><small>No prazo</small><b>96%</b><em class="ok">Meta atingida</em></div></div><div class="app-table"><div class="app-table-head"><span>Ordem</span><span>Descrição</span><span>Equipe</span><span>Status</span></div><div class="app-table-row"><span>OS-2208</span><span>Implantação de módulo</span><span>Equipe A</span><span class="ok">Em execução</span></div><div class="app-table-row"><span>OS-2207</span><span>Ajuste de integração</span><span>Equipe B</span><span class="ok">Concluída</span></div><div class="app-table-row"><span>OS-2206</span><span>Atualização cadastral</span><span>Equipe A</span><span class="ok">Em execução</span></div><div class="app-table-row"><span>OS-2205</span><span>Revisão de relatório</span><span>Equipe C</span><span class="wait">Aberta</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Interface de gestão operacional</h2><p>Controle de ordens, equipes, agenda e indicadores em uma interface clara e responsiva, com acompanhamento do andamento das atividades.</p><div class="tech">Angular&nbsp; · &nbsp;VB.NET&nbsp; · &nbsp;Oracle</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20gest%C3%A3o%20operacional">Quero uma solução assim →</a></div></div></article>
+<article class="demo-card"><div class="preview"><div class="app-window"><button class="fullscreen-toggle" type="button" aria-label="Abrir demonstração em tela cheia" title="Tela cheia">⛶ <span>Tela cheia</span></button><aside class="app-side"><div class="app-logo">◉ FBSJ</div><div class="app-nav"><span class="active">Ordens</span><span>Equipes</span><span>Agenda</span><span>Mapa</span><span>Indicadores</span></div></aside><div class="app-content"><div class="app-top"><div><div class="app-title">Gestão operacional</div><div class="app-sub">Ordens de serviço · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="app-kpis"><div class="app-kpi"><small>Abertas</small><b>36</b><em>Hoje</em></div><div class="app-kpi"><small>Em execução</small><b>14</b><em>Equipes ativas</em></div><div class="app-kpi"><small>Concluídas hoje</small><b>22</b><em class="ok">+ 8%</em></div><div class="app-kpi"><small>No prazo</small><b>96%</b><em class="ok">Meta atingida</em></div></div><div class="app-table"><div class="app-table-head"><span>Ordem</span><span>Descrição</span><span>Equipe</span><span>Status</span></div><div class="app-table-row"><span>OS-2208</span><span>Implantação de módulo</span><span>Equipe A</span><span class="ok">Em execução</span></div><div class="app-table-row"><span>OS-2207</span><span>Ajuste de integração</span><span>Equipe B</span><span class="ok">Concluída</span></div><div class="app-table-row"><span>OS-2206</span><span>Atualização cadastral</span><span>Equipe A</span><span class="ok">Em execução</span></div><div class="app-table-row"><span>OS-2205</span><span>Revisão de relatório</span><span>Equipe C</span><span class="wait">Aberta</span></div></div></div></div></div><div class="demo-info"><span class="demo-badge">DEMONSTRAÇÃO</span><h2>Interface de gestão operacional</h2><p>Controle de ordens, equipes, agenda e indicadores em uma interface clara e responsiva, com acompanhamento do andamento das atividades.</p><div class="tech">Angular&nbsp; · &nbsp;VB.NET&nbsp; · &nbsp;Oracle</div><div class="info-actions"><a class="btn btn-primary" href="mailto:fbsj.tecnologia@outlook.com?subject=Interesse%20em%20gest%C3%A3o%20operacional">Quero uma solução assim →</a></div></div></article>
 </section>
 <p class="foot">FBSJ Tecnologia · Demonstrações conceituais para apresentação de soluções. Dados fictícios.</p>
 </div></main>
@@ -350,6 +388,45 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
  });
  document.addEventListener('keydown',e=>{
   if(e.target.matches('.app-nav span')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.target.click()}
+ });
+})();
+</script>
+
+
+
+<script>
+/* Controle de tela cheia independente para cada demonstração. */
+(()=>{
+ const buttons=[...document.querySelectorAll('.fullscreen-toggle')];
+ const setLabel=(button,active)=>{
+  button.innerHTML=active?'↙ <span>Sair da tela cheia</span>':'⛶ <span>Tela cheia</span>';
+  button.setAttribute('aria-label',active?'Sair da tela cheia':'Abrir demonstração em tela cheia');
+  button.title=active?'Voltar ao tamanho normal':'Tela cheia';
+ };
+ async function exitFullscreen(){
+  if(document.fullscreenElement&&document.exitFullscreen){
+   try{await document.exitFullscreen()}catch(_){}
+  }
+  document.querySelectorAll('.demo-fullscreen-fallback').forEach(el=>el.classList.remove('demo-fullscreen-fallback'));
+ }
+ buttons.forEach(button=>{
+  button.addEventListener('click',async()=>{
+   const panel=button.closest('.demo-panel'),windowEl=button.closest('.app-window');
+   const active=document.fullscreenElement===windowEl||windowEl.classList.contains('demo-fullscreen-fallback');
+   if(active){await exitFullscreen();return}
+   if(document.fullscreenElement)await exitFullscreen();
+   if(windowEl.requestFullscreen){
+    try{await windowEl.requestFullscreen();return}catch(_){}
+   }
+   windowEl.classList.add('demo-fullscreen-fallback');
+   setLabel(button,true);
+  });
+ });
+ document.addEventListener('fullscreenchange',()=>{
+  buttons.forEach(button=>setLabel(button,document.fullscreenElement===button.closest('.app-window')));
+ });
+ document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')document.querySelectorAll('.demo-fullscreen-fallback').forEach(el=>el.classList.remove('demo-fullscreen-fallback'));
  });
 })();
 </script>
