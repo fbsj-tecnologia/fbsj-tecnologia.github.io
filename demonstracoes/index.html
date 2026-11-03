@@ -191,24 +191,24 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  min-height:100vh!important;min-height:100dvh!important;border:0;border-radius:0;
  overflow:auto;grid-template-columns:minmax(155px,18vw) minmax(0,1fr)
 }
-.app-window:fullscreen .app-content{overflow:auto;padding:clamp(18px,3vw,42px)}
+.app-window:fullscreen .app-content{min-width:0;min-height:0;overflow:auto;padding:clamp(54px,5vw,72px) clamp(18px,3vw,42px) 32px}
 .app-window:fullscreen .workspace-screen{min-height:calc(100vh - 130px)}
-.app-window:fullscreen .fullscreen-toggle{position:sticky;float:right;top:10px;margin:10px 10px -44px 0}
+.app-window:fullscreen .fullscreen-toggle{position:absolute;float:none;top:12px;right:12px;margin:0}
 .app-window.demo-fullscreen-fallback{
  position:fixed!important;inset:0!important;z-index:99999!important;
  width:100vw!important;max-width:none!important;height:100vh!important;height:100dvh!important;
  min-height:100vh!important;min-height:100dvh!important;border:0!important;border-radius:0!important;
  overflow:auto!important;grid-template-columns:minmax(155px,18vw) minmax(0,1fr)!important
 }
-.app-window.demo-fullscreen-fallback .app-content{overflow:auto;padding:clamp(18px,3vw,42px)}
-.app-window.demo-fullscreen-fallback .fullscreen-toggle{position:sticky;float:right;top:10px;margin:10px 10px -44px 0}
+.app-window.demo-fullscreen-fallback .app-content{min-width:0;min-height:0;overflow:auto;padding:clamp(54px,5vw,72px) clamp(18px,3vw,42px) 32px}
+.app-window.demo-fullscreen-fallback .fullscreen-toggle{position:absolute;float:none;top:12px;right:12px;margin:0}
 @media(max-width:760px){
  .fullscreen-toggle{top:7px;right:7px;min-height:29px;padding:0 8px;font-size:9px}
- .app-window:fullscreen,.app-window.demo-fullscreen-fallback{grid-template-columns:92px minmax(0,1fr)!important}
- .app-window:fullscreen .app-content,.app-window.demo-fullscreen-fallback .app-content{padding:14px 10px}
+ .app-window:fullscreen,.app-window.demo-fullscreen-fallback{grid-template-columns:92px minmax(0,1fr)!important;align-items:stretch}
+ .app-window:fullscreen .app-content,.app-window.demo-fullscreen-fallback .app-content{padding:52px 10px 18px}
 }
 @media(max-width:420px){
- .app-window:fullscreen,.app-window.demo-fullscreen-fallback{grid-template-columns:75px minmax(0,1fr)!important}
+ .app-window:fullscreen,.app-window.demo-fullscreen-fallback{grid-template-columns:75px minmax(0,1fr)!important;align-items:stretch}
  .fullscreen-toggle span{display:none}
 }
 
