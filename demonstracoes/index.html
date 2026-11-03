@@ -464,8 +464,9 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   modal.hidden=false;modal.setAttribute('aria-hidden','false');
   const first=modal.querySelector('input,button');if(first)first.focus();
  }
- function editorContent(values=[]){
-  return `<form class="workspace-modal-form"><label>Nome / descrição<input name="name" required value="${esc(values[0]||'')}" placeholder="Nome / descrição"></label><label>Categoria / responsável<input name="detail" value="${esc(values[1]||'')}" placeholder="Categoria / responsável"></label><label>Status<select name="status"><option ${(values[3]||'Ativo')==='Ativo'?'selected':''}>Ativo</option><option ${values[3]==='Pendente'?'selected':''}>Pendente</option><option ${values[3]==='Em andamento'?'selected':''}>Em andamento</option></select></label><div class="workspace-modal-actions"><button type="button" class="workspace-action" data-modal-close>Cancelar</button><button type="button" class="workspace-action primary" data-modal-save>Salvar</button></div></form>`;
+ function editorContent(screen,values=[]){
+  const headers=[...screen.querySelectorAll('.workspace-table thead th')].slice(0,-1);
+  return `<form class="workspace-modal-form">${headers.map((header,i)=>`<label>${esc(header.textContent.trim())}<input name="field-${i}" ${i===0?'required':''} value="${esc(values[i]||'')}" placeholder="${esc(header.textContent.trim())}"></label>`).join('')}<div class="workspace-modal-actions"><button type="button" class="workspace-action" data-modal-close>Cancelar</button><button type="button" class="workspace-action primary" data-modal-save>Salvar</button></div></form>`;
  }
  document.addEventListener('click',e=>{
   const nav=e.target.closest('.app-nav span');
@@ -483,22 +484,20 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   if(modalEdit){
    const screen=modalEdit.closest('.workspace-screen'),modal=screen.querySelector('[data-workspace-modal]'),row=modal._editingRow;
    const values=row?[...row.querySelectorAll('td')].slice(0,-1).map(td=>td.textContent.trim()):[];
-   showRecordModal(screen,'Editar cadastro',editorContent(values),row);return;
+   showRecordModal(screen,'Editar cadastro',editorContent(screen,values),row);return;
   }
   const modalSave=e.target.closest('[data-modal-save]');
   if(modalSave){
    const screen=modalSave.closest('.workspace-screen'),modal=screen.querySelector('[data-workspace-modal]'),form=modal.querySelector('.workspace-modal-form');
-   const name=form.querySelector('[name=name]').value.trim(),detail=form.querySelector('[name=detail]').value.trim(),status=form.querySelector('[name=status]').value;
-   if(!name){form.querySelector('[name=name]').focus();return}
+   const fields=[...form.querySelectorAll('input')],values=fields.map(input=>input.value.trim());
+   if(!values[0]){fields[0]?.focus();return}
    const table=screen.querySelector('.workspace-table tbody'),row=modal._editingRow;
    if(row){
-    const cells=row.querySelectorAll('td');if(cells[0])cells[0].textContent=name;if(cells[1])cells[1].textContent=detail||'Cadastro demonstrativo';if(cells[3])cells[3].textContent=status;
+    const cells=row.querySelectorAll('td');values.forEach((value,i)=>{if(cells[i])cells[i].textContent=value||'—'});
     screen.querySelector('.workspace-feedback').textContent='✓ Cadastro atualizado nesta sessão.';
    }else{
-    const headers=[...screen.querySelectorAll('.workspace-table thead th')].slice(0,-1);
-    const values=[name,detail||'Cadastro demonstrativo',new Date().toLocaleDateString('pt-BR'),status];
     const tr=document.createElement('tr');
-    tr.innerHTML=headers.map((_,i)=>'<td>'+esc(values[i]||'—')+'</td>').join('')+rowMenu();table.prepend(tr);
+    tr.innerHTML=values.map(value=>'<td>'+esc(value||'—')+'</td>').join('')+rowMenu();table.prepend(tr);
     screen.querySelector('.workspace-feedback').textContent='✓ Cadastro demonstrativo adicionado nesta sessão.';
    }
    closeRecordModal(screen);return;
@@ -508,7 +507,7 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   const screen=action.closest('.workspace-screen');if(!screen)return;
   const feedback=screen.querySelector('.workspace-feedback');
   if(action.hasAttribute('data-new')){
-   showRecordModal(screen,'Novo cadastro',editorContent());return;
+   showRecordModal(screen,'Novo cadastro',editorContent(screen));return;
   }
   if(action.hasAttribute('data-export')){
    const table=screen.querySelector('.workspace-table');if(!table)return;
