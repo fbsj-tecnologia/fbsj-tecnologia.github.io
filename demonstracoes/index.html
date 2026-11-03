@@ -1275,7 +1275,15 @@ document.querySelectorAll('.app-window').forEach(app=>{
   modal.hidden=true;modal.setAttribute('aria-hidden','true');modal.innerHTML='';modal._editingRow=null;
  }
  function showRecordModal(screen,title,content,editingRow=null){
-  const modal=screen.querySelector('[data-workspace-modal]');
+  let modal=screen.querySelector('[data-workspace-modal]');
+  if(!modal){
+   modal=document.createElement('div');
+   modal.className='workspace-modal';
+   modal.setAttribute('data-workspace-modal','');
+   modal.hidden=true;
+   modal.setAttribute('aria-hidden','true');
+   screen.appendChild(modal);
+  }
   modal._editingRow=editingRow;
   modal.innerHTML=`<div class="workspace-modal-backdrop" data-modal-backdrop></div><section class="workspace-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="workspace-modal-title"><header class="workspace-modal-header"><h3 id="workspace-modal-title">${esc(title)}</h3><button type="button" class="workspace-modal-close" data-modal-close aria-label="Fechar">×</button></header><div class="workspace-modal-content">${content}</div></section>`;
   modal.hidden=false;modal.setAttribute('aria-hidden','false');
