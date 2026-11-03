@@ -238,6 +238,27 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .app-top .demo-tag{transform:translateY(25px)}
 }
 
+
+/* Reserva uma faixa própria para o controle de tela cheia.
+   Evita que o botão cubra campos, ações ou tabelas quando a demonstração
+   entra em tela cheia mantendo a posição de rolagem anterior. */
+.app-window:fullscreen,
+.app-window.demo-fullscreen-fallback{
+ box-sizing:border-box!important;
+ padding-top:62px!important;
+}
+.app-window:fullscreen .fullscreen-toggle,
+.app-window.demo-fullscreen-fallback .fullscreen-toggle{
+ top:12px!important;
+ right:12px!important;
+}
+@media(max-width:760px){
+ .app-window:fullscreen,
+ .app-window.demo-fullscreen-fallback{padding-top:56px!important}
+ .app-window:fullscreen .fullscreen-toggle,
+ .app-window.demo-fullscreen-fallback .fullscreen-toggle{top:10px!important;right:10px!important}
+}
+
 </style>
 </head>
 <body>
