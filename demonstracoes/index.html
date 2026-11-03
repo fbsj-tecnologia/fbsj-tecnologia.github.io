@@ -535,12 +535,6 @@ let initial='light';try{initial=localStorage.getItem('fbsj-demo-theme')||'light'
   const title=panel.querySelector('.app-title')?.textContent||'Área de gestão';
   content.innerHTML=`<div class="app-top"><div><div class="app-title">${esc(label)}</div><div class="app-sub">${esc(title)} · dados demonstrativos</div></div><span class="demo-tag">DEMONSTRAÇÃO</span></div><div class="workspace-screen"><div class="workspace-grid">${config.stats.map(s=>`<div class="workspace-stat"><small>${esc(s[0])}</small><b>${esc(s[1])}</b></div>`).join('')}</div><div class="workspace-toolbar"><input class="workspace-search" type="search" placeholder="Pesquisar em ${esc(label.toLowerCase())}..." aria-label="Pesquisar ${esc(label)}"><button class="workspace-action primary" data-new>＋ Novo cadastro</button><div class="workspace-export"><button class="workspace-action" type="button" data-export-toggle aria-expanded="false">Exportar ▾</button><div class="workspace-export-menu" data-export-menu hidden><button type="button" data-export-format="xlsx">Excel (.xlsx)</button><button type="button" data-export-format="csv">CSV (.csv)</button><button type="button" data-export-format="pdf">PDF (.pdf)</button></div></div></div><div class="workspace-modal" data-workspace-modal hidden aria-hidden="true"></div><div class="workspace-feedback" aria-live="polite">Exibindo dados fictícios para demonstração.</div><div data-table>${makeTable(config.cols,config.rows,panel.id,label)}</div></div>`;
  }
- function wireUpload(panel){
-  const input=panel.querySelector('#excelFile');if(!input)return;
-  // The original import handler remains attached in the page's first script; restore its status on return.
- }
-
-
  function normalizeImportHeader(value){
   return String(value??'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]/g,'');
  }
@@ -764,28 +758,6 @@ let initial='light';try{initial=localStorage.getItem('fbsj-demo-theme')||'light'
    if(modal)closeRecordModal(modal.closest('.workspace-screen'));
   }
  });
- document.addEventListener('change',e=>{
-  if(!e.target.matches('#excelFile'))return;
-  const file=e.target.files&&e.target.files[0];if(!file)return;
-  const status=document.getElementById('uploadStatus');if(!status)return;
-  if(file.size>10*1024*1024){status.textContent='Arquivo maior que 10 MB.';return}
-  if(!window.XLSX){status.textContent='Leitor de planilhas indisponível. Verifique sua conexão.';return}
-  status.textContent='Lendo arquivo…';
-  const reader=new FileReader();
-  reader.onload=ev=>{try{
-   const wb=XLSX.read(ev.target.result,{type:'array'}),sheet=wb.Sheets[wb.SheetNames[0]],rows=XLSX.utils.sheet_to_json(sheet,{defval:''});
-   if(!rows.length){status.textContent='A planilha não possui registros.';return}
-   const keys=Object.keys(rows[0]),find=terms=>keys.find(k=>terms.some(x=>k.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(x)));
-   const revenue=find(['receita','faturamento','valor']);
-   if(!revenue){status.textContent='Planilha lida, mas não encontramos coluna Receita/Faturamento/Valor.';return}
-   const total=rows.reduce((sum,r)=>{let v=r[revenue];if(typeof v==='string')v=Number(v.replace(/[R$\s.]/g,'').replace(',','.'));return sum+(Number(v)||0)},0);
-   const mini=document.getElementById('miniRevenue');if(mini)mini.textContent=total.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
-   status.textContent='✓ '+rows.length+' linhas importadas de '+file.name+'. Indicador de receita atualizado nesta demonstração.';
-  }catch(err){status.textContent='Não foi possível ler esse arquivo. Confira o formato XLSX, XLS ou CSV.'}};
-  reader.onerror=()=>status.textContent='Falha ao acessar o arquivo.';
-  reader.readAsArrayBuffer(file);
- });
-
  document.addEventListener('change',async e=>{
   if(!e.target.matches('#moduleImportFile'))return;
   const input=e.target,file=input.files&&input.files[0],panel=input.closest('.demo-panel');
