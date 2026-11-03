@@ -530,6 +530,49 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .prototype-theme-toggle .theme-icon{font-size:11px}
 }
 
+
+/* Cores dos textos são controladas somente pelo tema da janela do protótipo.
+   Os fundos e cartões permanecem no padrão azul-marinho nos dois modos. */
+.app-window.prototype-theme-dark,
+.app-window.prototype-theme-light{
+ background:#0b1e3c!important;
+ color-scheme:dark!important;
+}
+.app-window.prototype-theme-dark *{
+ color:#eaf4ff!important;
+}
+.app-window.prototype-theme-light *{
+ color:#69aefc!important;
+}
+.app-window.prototype-theme-dark .app-nav span.active{
+ color:#ffffff!important;
+}
+.app-window.prototype-theme-light .app-nav span.active{
+ color:#ffffff!important;
+}
+.app-window .prototype-theme-toggle,
+.app-window .prototype-theme-toggle * ,
+.app-window .fullscreen-toggle,
+.app-window .fullscreen-toggle *{
+ color:#ffffff!important;
+}
+.app-window.prototype-theme-light .app-kpi em,
+.app-window.prototype-theme-dark .app-kpi em{
+ color:#35d6b0!important;
+}
+.app-window.prototype-theme-light .app-nav span.active,
+.app-window.prototype-theme-dark .app-nav span.active{
+ background:#087bdf!important;
+}
+.app-window.prototype-theme-light input,
+.app-window.prototype-theme-light select,
+.app-window.prototype-theme-light textarea,
+.app-window.prototype-theme-dark input,
+.app-window.prototype-theme-dark select,
+.app-window.prototype-theme-dark textarea{
+ color-scheme:dark!important;
+}
+
 </style>
 </head>
 <body>
