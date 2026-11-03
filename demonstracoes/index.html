@@ -1044,6 +1044,66 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  }
 }
 
+
+/* Controles do protótipo: lado a lado em desktop e mobile */
+.app-window > .fullscreen-toggle{
+ top:10px!important;
+ right:10px!important;
+}
+.app-window > .prototype-theme-toggle:not(.in-site-header){
+ top:10px!important;
+ right:120px!important;
+}
+@media(max-width:760px){
+ .app-window > .fullscreen-toggle{
+  top:10px!important;
+  right:8px!important;
+  width:34px!important;
+  min-width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
+  padding:0!important;
+  gap:0!important;
+  font-size:0!important;
+ }
+ .app-window > .fullscreen-toggle::before{
+  content:"⛶";
+  display:block;
+  font-size:20px;
+  line-height:1;
+ }
+ .app-window > .fullscreen-toggle span{display:none!important}
+ .app-window > .prototype-theme-toggle:not(.in-site-header){
+  top:10px!important;
+  right:50px!important;
+  width:34px!important;
+  min-width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
+  padding:0!important;
+  gap:0!important;
+  font-size:0!important;
+ }
+ .app-window > .prototype-theme-toggle:not(.in-site-header) .theme-icon{
+  display:block!important;
+  font-size:18px!important;
+  line-height:1;
+ }
+ .app-window > .prototype-theme-toggle:not(.in-site-header) .theme-label{display:none!important}
+}
+@media(max-width:420px){
+ .app-window > .fullscreen-toggle,
+ .app-window > .prototype-theme-toggle:not(.in-site-header){
+  top:9px!important;
+  height:32px!important;
+  min-height:32px!important;
+  width:32px!important;
+  min-width:32px!important;
+ }
+ .app-window > .fullscreen-toggle{right:7px!important}
+ .app-window > .prototype-theme-toggle:not(.in-site-header){right:45px!important}
+}
+
 </style>
 </head>
 <body>
