@@ -608,6 +608,121 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 .preview.preview-expanded .app-top .demo-tag{top:18px}
 .preview.preview-expanded .app-top{margin-bottom:clamp(34px,3vw,48px)!important}
 
+
+/* Revisão final dos temas: escuro mantém o padrão azul-marinho; claro inverte superfícies e tipografia. */
+.app-window.prototype-theme-dark{
+ color-scheme:dark!important;background:#0b1e3c!important;color:#eaf4ff!important;
+}
+.app-window.prototype-theme-dark .app-side{background:#081a35!important;border-color:#1d3558!important}
+.app-window.prototype-theme-dark .app-content{background:#0b1e3c!important}
+.app-window.prototype-theme-dark .app-kpi{background:#172c4d!important;border-color:#29446c!important}
+.app-window.prototype-theme-dark .app-chart,
+.app-window.prototype-theme-dark .app-table{background:#142a4b!important;border-color:#29446c!important}
+.app-window.prototype-theme-dark .app-table-head{color:#eaf4ff!important}
+.app-window.prototype-theme-dark .app-table-row{color:#c4d5eb!important;border-color:#294263!important}
+.app-window.prototype-theme-dark .app-title,
+.app-window.prototype-theme-dark .chart-label,
+.app-window.prototype-theme-dark .app-logo,
+.app-window.prototype-theme-dark .app-kpi b{color:#eaf4ff!important}
+.app-window.prototype-theme-dark .app-sub,
+.app-window.prototype-theme-dark .app-nav span,
+.app-window.prototype-theme-dark .app-kpi small{color:#a8bdd9!important}
+.app-window.prototype-theme-dark .app-nav span.active{background:#087bdf!important;color:#fff!important}
+.app-window.prototype-theme-light{
+ color-scheme:light!important;background:#f3f6fb!important;color:#172943!important;
+}
+.app-window.prototype-theme-light .app-side{background:#e5edf7!important;border-color:#c5d3e5!important}
+.app-window.prototype-theme-light .app-content{background:#f3f6fb!important}
+.app-window.prototype-theme-light .app-kpi{background:#fff!important;border-color:#d4deeb!important}
+.app-window.prototype-theme-light .app-chart,
+.app-window.prototype-theme-light .app-table{background:#fff!important;border-color:#d4deeb!important}
+.app-window.prototype-theme-light .app-title,
+.app-window.prototype-theme-light .chart-label,
+.app-window.prototype-theme-light .app-logo,
+.app-window.prototype-theme-light .app-kpi b{color:#172943!important}
+.app-window.prototype-theme-light .app-sub,
+.app-window.prototype-theme-light .app-nav span,
+.app-window.prototype-theme-light .app-kpi small{color:#536781!important}
+.app-window.prototype-theme-light .app-nav span.active{background:#087bdf!important;color:#fff!important}
+.app-window.prototype-theme-light .app-table-head{color:#203b5c!important}
+.app-window.prototype-theme-light .app-table-row{color:#405875!important;border-color:#dbe4ef!important}
+.app-window.prototype-theme-light .app-kpi em{color:#07866b!important}
+.app-window.prototype-theme-light .app-table .ok{color:#07866b!important}
+.app-window.prototype-theme-light .app-table .wait{color:#9a6500!important}
+.app-window.prototype-theme-light .workspace-import-card,
+.app-window.prototype-theme-light .workspace-panel,
+.app-window.prototype-theme-light .workspace-stat{background:#fff!important;border-color:#d4deeb!important}
+.app-window.prototype-theme-light .workspace-search,
+.app-window.prototype-theme-light .workspace-form input,
+.app-window.prototype-theme-light .workspace-form select,
+.app-window.prototype-theme-light .workspace-import-select{background:#fff!important;color:#172943!important;border-color:#c5d3e5!important}
+.app-window.prototype-theme-light .workspace-import-drop{background:#edf3fa!important;border-color:#9db4d0!important;color:#203b5c!important}
+.app-window.prototype-theme-light :is(h1,h2,h3,h4,p,span,small,label,td,th,strong,b,em,li,dt,dd){color:inherit}
+.app-window.prototype-theme-light .app-nav span.active,
+.app-window.prototype-theme-light .prototype-theme-toggle,
+.app-window.prototype-theme-light .fullscreen-toggle{color:#fff!important}
+.app-window .prototype-theme-toggle,
+.app-window .fullscreen-toggle{background:#123967!important;color:#fff!important}
+
+/* Corrige o mapa de integrações: três colunas com altura real, sem invadir a tabela. */
+#panel-integracao .app-chart{min-height:320px!important;padding:clamp(16px,1.5vw,26px)!important}
+#panel-integracao .integration-flow{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(150px,.9fr) minmax(0,1fr)!important;
+ grid-template-areas:none!important;align-items:center!important;gap:clamp(12px,1vw,20px)!important;
+ height:auto!important;min-height:220px!important;margin-top:12px!important;
+}
+#panel-integracao .integration-flow>div:first-child,
+#panel-integracao .integration-flow>div:last-child{
+ display:grid!important;gap:12px!important;align-content:center!important;
+}
+#panel-integracao .integration-flow>div:nth-child(2){
+ min-height:110px!important;display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;padding:20px 12px!important;
+}
+#panel-integracao .integration-flow .app-kpi{
+ min-height:58px!important;display:flex!important;align-items:center!important;justify-content:center!important;
+ padding:12px!important;font-size:clamp(13px,.9vw,17px)!important;
+}
+#panel-integracao .app-table{margin-top:16px!important}
+#panel-integracao .app-table-head,#panel-integracao .app-table-row{
+ grid-template-columns:1.1fr 1.2fr .8fr .7fr!important;
+ font-size:clamp(11px,.72vw,14px)!important;padding:11px 7px!important;gap:10px!important;
+}
+#panel-integracao .app-chart .chart-label{font-size:clamp(15px,1vw,19px)!important}
+#panel-operacional .app-kpi,
+#panel-automacao .app-kpi{padding:clamp(16px,1.2vw,24px)!important}
+#panel-operacional .app-kpi small,
+#panel-automacao .app-kpi small{font-size:clamp(12px,.8vw,15px)!important}
+#panel-operacional .app-kpi b,
+#panel-automacao .app-kpi b{font-size:clamp(20px,1.45vw,29px)!important}
+#panel-operacional .app-kpi em,
+#panel-automacao .app-kpi em{font-size:clamp(11px,.75vw,14px)!important}
+#panel-operacional .app-table-head,#panel-operacional .app-table-row,
+#panel-automacao .app-table-head,#panel-automacao .app-table-row{
+ font-size:clamp(11px,.72vw,14px)!important;padding:11px 7px!important;gap:10px!important;
+}
+#panel-operacional .app-title,#panel-automacao .app-title,#panel-integracao .app-title{
+ font-size:clamp(24px,1.8vw,34px)!important
+}
+#panel-operacional .app-sub,#panel-automacao .app-sub,#panel-integracao .app-sub{
+ font-size:clamp(13px,.95vw,17px)!important
+}
+@media(max-width:760px){
+ #panel-integracao .app-chart{min-height:0!important}
+ #panel-integracao .integration-flow{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  grid-template-areas:"sources targets" "api api"!important;
+  min-height:0!important;gap:8px!important
+ }
+ #panel-integracao .integration-flow>div:first-child{grid-area:sources!important}
+ #panel-integracao .integration-flow>div:nth-child(2){grid-area:api!important;min-height:54px!important}
+ #panel-integracao .integration-flow>div:last-child{grid-area:targets!important}
+ #panel-integracao .integration-flow .app-kpi{min-height:38px!important;font-size:11px!important;padding:7px 4px!important}
+ #panel-integracao .app-table-head,#panel-integracao .app-table-row{font-size:8px!important;padding:6px 2px!important}
+ #panel-operacional .app-table-head,#panel-operacional .app-table-row,
+ #panel-automacao .app-table-head,#panel-automacao .app-table-row{font-size:8px!important;padding:6px 2px!important}
+}
+
 </style>
 </head>
 <body>
