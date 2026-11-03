@@ -884,6 +884,94 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  box-shadow:0 0 0 1px #d7e2ef;
 }
 
+
+/* Modais acompanham o tema ativo de cada protótipo. */
+.app-window.prototype-theme-dark .workspace-modal-dialog{
+ background:linear-gradient(145deg,#102747 0%,#0b1e3c 100%)!important;
+ border-color:#29476f!important;color:#eaf4ff!important;
+}
+.app-window.prototype-theme-dark .workspace-modal-header{
+ background:#142d50!important;border-color:#29476f!important;
+}
+.app-window.prototype-theme-dark .workspace-modal-header h3,
+.app-window.prototype-theme-dark .workspace-detail-item strong{color:#f1f7ff!important}
+.app-window.prototype-theme-dark .workspace-modal-form label,
+.app-window.prototype-theme-dark .workspace-status-field legend,
+.app-window.prototype-theme-dark .workspace-detail-item span{color:#a9bfdc!important}
+.app-window.prototype-theme-dark .workspace-modal-form input,
+.app-window.prototype-theme-dark .workspace-modal-form select{
+ background:#0d2342!important;color:#eaf4ff!important;border-color:#35547d!important;
+}
+.app-window.prototype-theme-dark .workspace-modal-form input::placeholder{color:#8199b8!important}
+.app-window.prototype-theme-dark .workspace-modal-close{
+ background:#123967!important;color:#eaf7ff!important;border-color:#2878b9!important;
+}
+.app-window.prototype-theme-dark .workspace-modal-actions .workspace-action:not(.primary){
+ background:#e8f0fa!important;color:#17395f!important;border-color:#c3d3e6!important;
+}
+.app-window.prototype-theme-dark .workspace-modal-actions .workspace-action.primary{
+ background:linear-gradient(120deg,#007bff,#00bfe8)!important;color:#fff!important;
+}
+.app-window.prototype-theme-dark .workspace-detail-item{border-color:#29476f!important}
+.app-window.prototype-theme-dark .workspace-status-options label{
+ background:#0d2342!important;color:#eaf4ff!important;border-color:#35547d!important;
+}
+.app-window.prototype-theme-light .workspace-modal-backdrop{
+ background:rgba(15,35,62,.42)!important;backdrop-filter:blur(5px);
+}
+.app-window.prototype-theme-light .workspace-modal-dialog{
+ background:#fff!important;border:1px solid #cbd8e8!important;color:#172943!important;
+ box-shadow:0 22px 58px rgba(23,48,78,.24)!important;
+}
+.app-window.prototype-theme-light .workspace-modal-header{
+ background:#edf4fc!important;border-bottom:1px solid #d4dfed!important;
+}
+.app-window.prototype-theme-light .workspace-modal-header h3{color:#17395f!important}
+.app-window.prototype-theme-light .workspace-modal-close{
+ background:#e4edf8!important;border:1px solid #b9c9dd!important;color:#17395f!important;
+}
+.app-window.prototype-theme-light .workspace-modal-close:hover{
+ background:#d5e8fb!important;border-color:#1686d9!important;color:#075a9d!important;
+}
+.app-window.prototype-theme-light .workspace-modal-form label,
+.app-window.prototype-theme-light .workspace-status-field legend{
+ color:#405875!important;
+}
+.app-window.prototype-theme-light .workspace-modal-form input,
+.app-window.prototype-theme-light .workspace-modal-form select{
+ background:#fff!important;color:#172943!important;border:1px solid #b9c9dd!important;
+}
+.app-window.prototype-theme-light .workspace-modal-form input::placeholder{color:#8494a8!important}
+.app-window.prototype-theme-light .workspace-modal-form input:focus,
+.app-window.prototype-theme-light .workspace-modal-form select:focus{
+ border-color:#1686d9!important;box-shadow:0 0 0 3px rgba(22,134,217,.14)!important;
+}
+.app-window.prototype-theme-light .workspace-modal-form select option{
+ background:#fff!important;color:#172943!important;
+}
+.app-window.prototype-theme-light .workspace-modal-actions .workspace-action:not(.primary){
+ background:#e8f0fa!important;border:1px solid #b8c9de!important;color:#17395f!important;
+}
+.app-window.prototype-theme-light .workspace-modal-actions .workspace-action.primary{
+ background:linear-gradient(120deg,#087bdf,#00a9cf)!important;border:0!important;color:#fff!important;
+}
+.app-window.prototype-theme-light .workspace-detail-item{
+ border-color:#dbe4ef!important;
+}
+.app-window.prototype-theme-light .workspace-detail-item span{color:#536781!important}
+.app-window.prototype-theme-light .workspace-detail-item strong{color:#17395f!important}
+.app-window.prototype-theme-light .workspace-status-options label{
+ background:#f5f8fc!important;border:1px solid #c4d2e3!important;color:#17395f!important;
+}
+.app-window.prototype-theme-light .workspace-status-options label:has(input:checked){
+ background:#e3f1ff!important;border-color:#1686d9!important;color:#075a9d!important;
+}
+.app-window.prototype-theme-light .workspace-status-options input{accent-color:#087bdf!important}
+@media(max-width:480px){
+ .workspace-modal-actions .workspace-action{min-height:38px}
+ .workspace-modal-form input,.workspace-modal-form select{font-size:13px!important}
+}
+
 </style>
 </head>
 <body>
