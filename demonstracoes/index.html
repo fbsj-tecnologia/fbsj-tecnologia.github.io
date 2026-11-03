@@ -525,12 +525,12 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
  }
  async function exportGrid(screen,format){
   const {headers,rows,logo,date}=exportGridData(screen);
-  const safe=(value)=>String(value??'').replace(/[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F]/g,'').trim();
-  const filename='FBSJ_'+(screen.closest('.workspace-screen')?.querySelector('.app-title')?.textContent.trim()||'Relatorio').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_');
+  const safe=(value)=>String(value??'').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').trim();
+  const filename='FBSJ_'+(screen.closest('.workspace-screen')?.querySelector('.app-title')?.textContent.trim()||'Relatorio').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_');
   if(format==='csv'){
    const quote=v=>'"'+safe(v).replace(/"/g,'""')+'"';
    const lines=[['FBSJ Tecnologia'],['Relatório demonstrativo',date],[],headers.map(quote).join(';'),...rows.map(row=>row.map(quote).join(';'))];
-   downloadBlob(new Blob(['\\uFEFF'+lines.map(line=>Array.isArray(line)?line.map(quote).join(';'):line).join('\\r\\n')],{type:'text/csv;charset=utf-8;'}),filename+'.csv');
+   downloadBlob(new Blob(['\uFEFF'+lines.map(line=>Array.isArray(line)?line.map(quote).join(';'):line).join('\r\n')],{type:'text/csv;charset=utf-8;'}),filename+'.csv');
    return 'CSV exportado. O formato CSV não permite incorporar a imagem da logo; a identificação FBSJ consta no cabeçalho.';
   }
   if(format==='xlsx'){
@@ -538,7 +538,7 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
    const workbook=new ExcelJS.Workbook();workbook.creator='FBSJ Tecnologia';workbook.created=new Date();
    const sheet=workbook.addWorksheet('Relatório',{views:[{state:'frozen',ySplit:5}]});
    sheet.columns=headers.map((h,i)=>({header:h,key:'c'+i,width:Math.max(18,Math.min(34,h.length+8))}));
-   sheet.mergeCells(1,1,1,Math.max(3,headers.length));sheet.getCell('A1').value='FBSJ Tecnologia';sheet.getCell('A1').font={bold:true,size:18,color:{argb:'FF087BDF'}};
+   sheet.mergeCells(1,3,1,Math.max(3,headers.length));sheet.getCell('C1').value='FBSJ Tecnologia';sheet.getCell('C1').font={bold:true,size:18,color:{argb:'FF087BDF'}};
    sheet.mergeCells(2,1,2,Math.max(3,headers.length));sheet.getCell('A2').value='Relatório demonstrativo · '+date;sheet.getCell('A2').font={size:10,color:{argb:'FF526783'}};
    if(logo.startsWith('data:image/')){const imageId=workbook.addImage({base64:logo.split(',')[1],extension:logo.includes('image/jpeg')?'jpeg':'png'});sheet.addImage(imageId,{tl:{col:0,row:0},ext:{width:64,height:64}});sheet.getRow(1).height=52;sheet.getRow(2).height=20;}
    const headerRow=sheet.getRow(5);headers.forEach((h,i)=>{const c=headerRow.getCell(i+1);c.value=safe(h);c.font={bold:true,color:{argb:'FFFFFFFF'}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF123967'}};c.alignment={vertical:'middle'};});headerRow.height=24;
@@ -549,7 +549,7 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
   }
   if(format==='pdf'){
    const {jsPDF}=await loadExportLibrary('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js','jspdf');
-   await loadExportLibrary('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js','jspdf');
+   await new Promise((resolve,reject)=>{const plugin=document.createElement('script');plugin.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js';plugin.onload=resolve;plugin.onerror=()=>reject(new Error('Não foi possível carregar o formatador PDF'));document.head.appendChild(plugin);});
    const doc=new jsPDF({orientation:headers.length>5?'landscape':'portrait',unit:'mm',format:'a4'});
    if(logo.startsWith('data:image/'))doc.addImage(logo,'PNG',14,10,18,18);
    doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(8,75,140);doc.text('FBSJ Tecnologia',38,18);
