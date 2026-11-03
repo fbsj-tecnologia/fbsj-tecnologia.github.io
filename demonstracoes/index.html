@@ -512,12 +512,12 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
 
 
  function normalizeImportHeader(value){
-  return String(value??'').trim().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]/g,'');
+  return String(value??'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]/g,'');
  }
  function detectTextDelimiter(text){
-  const first=(text.replace(/^\\uFEFF/,'').split(/\\r?\\n/).find(line=>line.trim())||'');
-  const candidates=['\\t','; ',','];
-  return candidates.map(d=>({d,n:(first.match(new RegExp(d==='\\t'?'\\t':d==='; '?';':',','g'))||[]).length})).sort((a,b)=>b.n-a.n)[0]?.d||';';
+  const first=(text.replace(/^\uFEFF/,'').split(/\r?\n/).find(line=>line.trim())||'');
+  const candidates=['\t',';',','];
+  return candidates.map(d=>({d,n:first.split(d).length-1})).sort((x,y)=>y.n-x.n)[0]?.d||';';
  }
  function parseDelimitedText(text,delimiter){
   const rows=[];let row=[],cell='',quoted=false;
@@ -526,7 +526,7 @@ document.getElementById('templateBtn').addEventListener('click',()=>{let csv='\u
    if(ch==='"'&&quoted&&text[i+1]==='"'){cell+='"';i++;continue}
    if(ch==='"'){quoted=!quoted;continue}
    if(ch===delimiter&&!quoted){row.push(cell.trim());cell='';continue}
-   if((ch==='\\n'||ch==='\\r')&&!quoted){if(ch==='\\r'&&text[i+1]==='\\n')i++;row.push(cell.trim());if(row.some(v=>v!==''))rows.push(row);row=[];cell='';continue}
+   if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell.trim());if(row.some(v=>v!==''))rows.push(row);row=[];cell='';continue}
    cell+=ch;
   }
   row.push(cell.trim());if(row.some(v=>v!==''))rows.push(row);
