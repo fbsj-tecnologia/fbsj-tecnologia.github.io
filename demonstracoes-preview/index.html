@@ -421,37 +421,76 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .preview.preview-expanded .fullscreen-toggle span{display:inline}
 }
 
-/* Janela maximizada dentro da página: barra do navegador e cabeçalho do site continuam visíveis. */
+
+/* Maximização dentro da janela do navegador, mantendo o cabeçalho do site e o contexto da seção. */
 .preview.preview-expanded{
  position:fixed!important;top:92px!important;right:0!important;bottom:0!important;left:0!important;
  z-index:25!important;width:100vw!important;height:auto!important;min-height:0!important;
- margin:0!important;padding:clamp(12px,1.5vw,24px)!important;
+ margin:0!important;padding:clamp(14px,1.6vw,26px)!important;
  display:flex!important;align-items:stretch!important;justify-content:stretch!important;
  overflow:auto!important;box-sizing:border-box!important;
  background:radial-gradient(ellipse at 85% 0%,#173d72,#0b1e3c 58%,#06122a)!important;
  border:0!important;border-radius:0!important;box-shadow:0 18px 55px #0008!important;
 }
 .preview.preview-expanded .app-window{
- width:100%!important;max-width:none!important;min-height:100%!important;height:100%!important;
- grid-template-columns:minmax(180px,17%) minmax(0,1fr)!important;
+ width:100%!important;max-width:none!important;height:100%!important;min-height:100%!important;
+ grid-template-columns:clamp(205px,19vw,290px) minmax(0,1fr)!important;
  border-radius:18px!important;overflow:hidden!important;box-shadow:0 18px 50px #0006!important;
 }
-.preview.preview-expanded .app-side{padding:clamp(18px,1.8vw,30px) clamp(12px,1.2vw,20px)!important}
-.preview.preview-expanded .app-content{min-width:0!important;min-height:0!important;overflow:auto!important;padding:clamp(22px,2.4vw,40px)!important}
-.preview.preview-expanded .app-top{padding-right:58px!important}
-.preview.preview-expanded .app-title{font-size:clamp(22px,1.8vw,32px)!important}
-.preview.preview-expanded .app-sub{font-size:clamp(12px,1vw,16px)!important}
-.preview.preview-expanded .workspace-screen{min-height:calc(100vh - 190px)!important}
-.preview.preview-expanded .fullscreen-toggle{top:14px!important;right:14px!important;z-index:40!important}
+.preview.preview-expanded .app-side{padding:clamp(22px,2vw,34px) clamp(16px,1.4vw,24px)!important}
+.preview.preview-expanded .app-logo{font-size:clamp(16px,1.15vw,20px)!important;margin-bottom:clamp(26px,2.4vw,40px)!important}
+.preview.preview-expanded .app-nav{gap:clamp(8px,.75vw,13px)!important}
+.preview.preview-expanded .app-nav span{font-size:clamp(14px,1vw,17px)!important;padding:clamp(12px,.9vw,16px) clamp(12px,1vw,18px)!important;border-radius:10px!important}
+.preview.preview-expanded .app-content{
+ min-width:0!important;min-height:0!important;height:100%!important;overflow:auto!important;
+ padding:clamp(26px,2.5vw,44px)!important;
+}
+.preview.preview-expanded .app-top{padding-right:66px!important;margin-bottom:clamp(22px,1.8vw,32px)!important}
+.preview.preview-expanded .app-title{font-size:clamp(25px,2vw,36px)!important;line-height:1.2!important}
+.preview.preview-expanded .app-sub{font-size:clamp(14px,1.1vw,18px)!important}
+.preview.preview-expanded .demo-tag{font-size:clamp(11px,.8vw,14px)!important;padding:7px 13px!important}
+.preview.preview-expanded .app-kpis{gap:clamp(12px,1vw,18px)!important;margin-bottom:clamp(18px,1.4vw,26px)!important}
+.preview.preview-expanded .app-kpi{padding:clamp(16px,1.35vw,24px)!important;border-radius:14px!important}
+.preview.preview-expanded .app-kpi small,.preview.preview-expanded .app-kpi em{font-size:clamp(12px,.9vw,15px)!important}
+.preview.preview-expanded .app-kpi b{font-size:clamp(23px,1.8vw,32px)!important}
+.preview.preview-expanded .app-charts{gap:clamp(14px,1vw,20px)!important}
+.preview.preview-expanded .app-chart{padding:clamp(18px,1.5vw,26px)!important;min-height:clamp(250px,32vh,390px)!important}
+.preview.preview-expanded .chart-label{font-size:clamp(14px,1vw,17px)!important}
+.preview.preview-expanded .bar-chart{height:clamp(160px,20vh,240px)!important}
+.preview.preview-expanded .donut-demo{width:clamp(140px,11vw,190px)!important;height:clamp(140px,11vw,190px)!important}
+.preview.preview-expanded .workspace-screen{min-height:calc(100vh - 210px)!important}
+.preview.preview-expanded .workspace-grid{gap:14px!important;margin:18px 0!important}
+.preview.preview-expanded .workspace-stat{padding:18px!important}
+.preview.preview-expanded .workspace-stat small{font-size:13px!important}
+.preview.preview-expanded .workspace-stat b{font-size:22px!important}
+.preview.preview-expanded .workspace-table{font-size:14px!important}
+.preview.preview-expanded .workspace-table th{font-size:13px!important;padding:14px!important}
+.preview.preview-expanded .workspace-table td{padding:14px!important}
+.preview.preview-expanded .workspace-table button,.preview.preview-expanded .workspace-action{font-size:13px!important;padding:11px 15px!important}
+.preview.preview-expanded .workspace-search,.preview.preview-expanded .workspace-form input,.preview.preview-expanded .workspace-form select{font-size:14px!important;padding:12px 14px!important}
+.preview.preview-expanded .workspace-feedback{font-size:13px!important}
+.preview.preview-expanded .fullscreen-toggle{top:14px!important;right:14px!important;z-index:40!important;padding:9px 14px!important;font-size:13px!important}
 @media(max-width:760px){
- .preview.preview-expanded{top:92px!important;padding:8px!important}
- .preview.preview-expanded .app-window{grid-template-columns:82px minmax(0,1fr)!important;border-radius:12px!important}
- .preview.preview-expanded .app-side{padding:12px 7px!important}
- .preview.preview-expanded .app-content{padding:52px 12px 18px!important}
+ .preview.preview-expanded{top:76px!important;padding:8px!important}
+ .preview.preview-expanded .app-window{grid-template-columns:88px minmax(0,1fr)!important;border-radius:12px!important}
+ .preview.preview-expanded .app-side{padding:12px 6px!important}
+ .preview.preview-expanded .app-logo{font-size:11px!important;margin-bottom:16px!important}
+ .preview.preview-expanded .app-nav{gap:5px!important}
+ .preview.preview-expanded .app-nav span{font-size:10px!important;padding:9px 5px!important;overflow-wrap:anywhere}
+ .preview.preview-expanded .app-content{padding:50px 12px 18px!important}
  .preview.preview-expanded .app-top{padding-right:0!important}
- .preview.preview-expanded .app-title{font-size:18px!important}
- .preview.preview-expanded .workspace-screen{min-height:calc(100vh - 170px)!important}
- .preview.preview-expanded .fullscreen-toggle{top:9px!important;right:9px!important}
+ .preview.preview-expanded .app-title{font-size:19px!important}
+ .preview.preview-expanded .app-sub{font-size:11px!important}
+ .preview.preview-expanded .app-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .preview.preview-expanded .app-kpi{padding:10px!important}
+ .preview.preview-expanded .app-kpi b{font-size:18px!important}
+ .preview.preview-expanded .app-kpi small,.preview.preview-expanded .app-kpi em{font-size:10px!important}
+ .preview.preview-expanded .app-charts{grid-template-columns:1fr!important}
+ .preview.preview-expanded .app-chart{min-height:190px!important;padding:12px!important}
+ .preview.preview-expanded .workspace-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .preview.preview-expanded .workspace-table{font-size:11px!important}
+ .preview.preview-expanded .workspace-table th,.preview.preview-expanded .workspace-table td{padding:9px!important}
+ .preview.preview-expanded .fullscreen-toggle{top:8px!important;right:8px!important;padding:6px 9px!important;font-size:10px!important}
 }
 
 </style>
@@ -858,12 +897,12 @@ let initial='light';try{initial=localStorage.getItem('fbsj-demo-theme')||'light'
 
 
 <script>
-/* Maximiza a demonstração dentro da janela do site, preservando o cabeçalho. */
+/* Amplia a demonstração sem removê-la da sua seção: a navegação interna continua funcional. */
 (()=>{
  const buttons=[...document.querySelectorAll('.fullscreen-toggle')];
  const expandIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M10 10 3 3m0 0h6M3 3v6M14 10l7-7m0 0h-6m6 0v6M10 14l-7 7m0 0h6m-6 0v-6m11-1 7 7m0 0h-6m6 0v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  const collapseIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 3 10 10m0 0V4m-6 6h6M21 3l-7 7m0 0V4m0 6h6M3 21l7-7m0 0v6m-6-6h6m11 7-7-7m0 0v6m0-6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
- let active=null,placeholder=null,oldOverflow='';
+ let active=null,oldOverflow='';
  const setLabel=(button,on)=>{
   button.innerHTML=(on?collapseIcon:expandIcon)+'<span>'+(on?'Reduzir':'Expandir')+'</span>';
   button.setAttribute('aria-label',on?'Reduzir demonstração':'Expandir demonstração no navegador');
@@ -872,11 +911,10 @@ let initial='light';try{initial=localStorage.getItem('fbsj-demo-theme')||'light'
  };
  const close=()=>{
   if(!active)return;
-  const {preview,windowEl,button}=active;
-  preview.classList.remove('preview-expanded');windowEl.classList.remove('demo-expanded');
-  if(placeholder&&placeholder.parentNode)placeholder.parentNode.insertBefore(preview,placeholder);
-  if(placeholder)placeholder.remove();
-  placeholder=null;document.body.style.overflow=oldOverflow;setLabel(button,false);active=null;
+  active.preview.classList.remove('preview-expanded');
+  active.windowEl.classList.remove('demo-expanded');
+  document.body.style.overflow=oldOverflow;
+  setLabel(active.button,false);active=null;
  };
  buttons.forEach(button=>{
   setLabel(button,false);
@@ -884,14 +922,12 @@ let initial='light';try{initial=localStorage.getItem('fbsj-demo-theme')||'light'
    if(active){if(active.button===button){close();return;}close();}
    const windowEl=button.closest('.app-window'),preview=windowEl&&windowEl.closest('.preview');
    if(!windowEl||!preview)return;
-   placeholder=document.createComment('posição original da demonstração');
-   preview.parentNode.insertBefore(placeholder,preview);
-   oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';
-   document.body.appendChild(preview);preview.classList.add('preview-expanded');windowEl.classList.add('demo-expanded');
+   oldOverflow=document.body.style.overflow;
+   document.body.style.overflow='hidden';
+   preview.classList.add('preview-expanded');windowEl.classList.add('demo-expanded');
    setLabel(button,true);active={preview,windowEl,button};
   });
  });
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
 })();
 </script>
-</body></html>
