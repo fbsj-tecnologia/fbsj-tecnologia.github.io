@@ -301,6 +301,11 @@ p { margin: 0 0 1em; }
 .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 26px; font-size: .85rem; color: var(--gray-400); }
 .footer__bottom p { margin: 0; }
 .footer__bottom a { display: inline; margin: 0; }
+.footer__visitas { display: flex; align-items: center; justify-content: center; gap: 6px; color: rgb(184,196,217); font-family: Inter, sans-serif; font-size: 12px; line-height: 1.4; opacity: .6; white-space: nowrap; }
+.footer__visitas svg { flex: 0 0 13px; width: 13px; height: 13px; }
+.footer__visitas strong { font-weight: 700; }
+.footer__visitas[hidden] { display: none !important; }
+@media (max-width: 640px) { .footer__visitas { flex-basis: 100%; justify-content: flex-start; white-space: normal; } }
 
 /* Botão flutuante WhatsApp */
 .wa-float { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: #25D366; color: var(--white); box-shadow: 0 14px 30px -8px rgba(37,211,102,.7); transition: transform .3s var(--ease); }
