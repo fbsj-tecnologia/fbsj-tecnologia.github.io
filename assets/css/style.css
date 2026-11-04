@@ -404,5 +404,5 @@ p { margin: 0 0 1em; }
 
 /* Afasta o botão do WhatsApp do contador de visitas em telas pequenas. */
 @media (max-width: 640px) {
-  .wa-float { right: max(90px, calc(env(safe-area-inset-right) + 78px)); }
+  .wa-float { right: max(130px, calc(env(safe-area-inset-right) + 118px)); }
 }
