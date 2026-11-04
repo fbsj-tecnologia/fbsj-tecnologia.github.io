@@ -231,3 +231,59 @@
     });
   }
 })();
+
+
+/* ---------- Contador de visitas (Abacus) ---------- */
+(async () => {
+  'use strict';
+  const display = document.getElementById('contador-visitas');
+  const todayEl = document.getElementById('visitas-hoje');
+  const totalEl = document.getElementById('visitas-total');
+  if (!display || !todayEl || !totalEl) return;
+
+  try {
+    // Obtém a data civil no fuso de Brasília, independentemente do fuso do aparelho.
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Sao_Paulo',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).formatToParts(new Date());
+    const datePart = (type) => parts.find((part) => part.type === type)?.value;
+    const dayKey = `dia-${datePart('year')}-${datePart('month')}-${datePart('day')}`;
+    const namespace = 'fbsj-tecnologia';
+    const sessionKey = 'fbsj-visita-contabilizada-v1';
+    let alreadyCounted = false;
+    let canPersistSession = true;
+
+    // Se o navegador bloquear sessionStorage, não incrementa para evitar duplicidades.
+    try {
+      alreadyCounted = sessionStorage.getItem(sessionKey) === '1';
+      if (!alreadyCounted) sessionStorage.setItem(sessionKey, '1');
+    } catch (_) {
+      canPersistSession = false;
+    }
+
+    const action = alreadyCounted || !canPersistSession ? 'get' : 'hit';
+    const endpoint = (key) => `https://abacus.jasoncameron.dev/${action}/${namespace}/${encodeURIComponent(key)}`;
+    const [totalResponse, dayResponse] = await Promise.all([
+      fetch(endpoint('total'), { method: 'GET', cache: 'no-store' }),
+      fetch(endpoint(dayKey), { method: 'GET', cache: 'no-store' })
+    ]);
+
+    if (!totalResponse.ok || !dayResponse.ok) return;
+    const [totalData, dayData] = await Promise.all([
+      totalResponse.json(),
+      dayResponse.json()
+    ]);
+    const total = Number(totalData.value);
+    const today = Number(dayData.value);
+    if (!Number.isFinite(total) || !Number.isFinite(today)) return;
+
+    totalEl.textContent = total.toLocaleString('pt-BR');
+    todayEl.textContent = today.toLocaleString('pt-BR');
+    display.hidden = false;
+  } catch (_) {
+    // Falhas de rede, CORS, serviço ou bloqueadores: mantém o contador oculto.
+  }
+})();
