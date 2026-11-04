@@ -418,6 +418,6 @@ p { margin: 0 0 1em; }
   .wa-float {
     right: 18px;
     left: auto;
-    bottom: max(92px, calc(env(safe-area-inset-bottom) + 92px));
+    bottom: max(65px, calc(env(safe-area-inset-bottom) + 65px));
   }
 }
