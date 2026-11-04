@@ -411,3 +411,13 @@ p { margin: 0 0 1em; }
 @media (max-width: 640px) {
   .wa-float { right: max(130px, calc(env(safe-area-inset-right) + 118px)); }
 }
+
+
+/* WhatsApp à esquerda no celular em orientação retrato; paisagem preservada */
+@media (max-width: 640px) and (orientation: portrait) {
+  .wa-float {
+    left: 18px;
+    right: auto;
+    bottom: max(92px, calc(env(safe-area-inset-bottom) + 92px));
+  }
+}
