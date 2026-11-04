@@ -298,14 +298,19 @@ p { margin: 0 0 1em; }
 .footer .brand { margin: 0; display: inline-flex; }
 .social { display: inline-grid !important; place-items: center; width: 42px; height: 42px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); }
 .social svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; }
-.footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 26px; font-size: .85rem; color: var(--gray-400); }
-.footer__bottom p { margin: 0; }
-.footer__bottom a { display: inline; margin: 0; }
-.footer__visitas { display: flex; align-items: center; justify-content: center; gap: 7px; width: fit-content; padding: 8px 12px; border: 1px solid rgba(184,196,217,.22); border-radius: 999px; background: rgba(255,255,255,.06); color: rgb(210,222,240); font-family: Inter, sans-serif; font-size: 13px; line-height: 1.4; opacity: .95; white-space: nowrap; }
+.footer__bottom { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding-top: 26px; font-size: .85rem; color: var(--gray-400); }
+.footer__bottom p { grid-column: 1; grid-row: 1; margin: 0; }
+.footer__bottom a { grid-column: 2; grid-row: 1; display: inline; margin: 0; }
+.footer__visitas { grid-column: 1 / -1; grid-row: 2; display: flex; align-items: center; justify-content: flex-start; gap: 7px; width: fit-content; padding: 8px 12px; border: 1px solid rgba(184,196,217,.22); border-radius: 999px; background: rgba(255,255,255,.06); color: rgb(210,222,240); font-family: Inter, sans-serif; font-size: 13px; line-height: 1.4; opacity: .95; white-space: nowrap; }
 .footer__visitas svg { flex: 0 0 15px; width: 15px; height: 15px; }
 .footer__visitas strong { color: #fff; font-weight: 700; }
 .footer__visitas[hidden] { display: none !important; }
-@media (max-width: 640px) { .footer__visitas { flex-basis: auto; justify-content: flex-start; white-space: normal; } }
+@media (max-width: 640px) {
+  .footer__bottom { grid-template-columns: 1fr; }
+  .footer__bottom p { grid-column: 1; grid-row: 1; }
+  .footer__bottom a { grid-column: 1; grid-row: 2; }
+  .footer__visitas { grid-column: 1; grid-row: 3; white-space: normal; }
+}
 
 /* Botão flutuante WhatsApp */
 .wa-float { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: #25D366; color: var(--white); box-shadow: 0 14px 30px -8px rgba(37,211,102,.7); transition: transform .3s var(--ease); }
