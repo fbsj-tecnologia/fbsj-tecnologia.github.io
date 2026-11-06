@@ -1190,6 +1190,23 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 .site-header .header-right.is-expanded .back-to-site{display:inline-flex}
 .site-header .back-to-site:hover{background:#ffffff18;border-color:var(--cyan)}
 @media(max-width:640px){.site-header .exp-nav{gap:10px}.site-header .exp-nav a:not(.btn){display:none}.site-header .exp-nav .btn{padding:10px 15px}}
+
+/* Cabeçalho alinhado visualmente ao Diagnóstico Digital */
+.site-header.nav--solid{height:76px;background:rgba(8,20,42,.95);box-shadow:0 1px 0 rgba(255,255,255,.08),0 12px 32px -24px #0009}
+.site-header .header-inner{width:min(100% - 40px,1200px);height:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.site-header .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+.site-header .brand img{display:block;width:40px;height:40px;flex:0 0 40px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px rgba(0,212,255,.35),0 0 24px rgba(0,212,255,.25)}
+.site-header .brand__name{font:700 1.12rem var(--display);letter-spacing:-.01em;white-space:nowrap}
+.site-header .brand__name span{font-weight:500;color:var(--cyan)}
+.site-header .exp-nav{display:flex;align-items:center;gap:2px}
+.site-header .exp-nav a{display:inline-flex;align-items:center;justify-content:center;color:rgba(255,255,255,.82);text-decoration:none;font-size:13px;font-weight:600;padding:9px 10px;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
+.site-header .exp-nav a:hover,.site-header .exp-nav a[aria-current=page]:not(.btn){color:#fff;background:#ffffff12}
+.site-header .exp-nav a[aria-current=page]:not(.btn):after{content:"";position:absolute;width:16px;height:2px;bottom:5px;left:calc(50% - 8px);background:var(--grad);border-radius:2px}
+.site-header .exp-nav a[aria-current=page]:not(.btn){position:relative}
+.site-header .exp-nav .btn.btn--primary.btn--sm{min-height:44px;padding:0 18px;margin-left:5px;border:0;border-radius:999px;background:var(--grad);color:#fff;font-size:13px;font-weight:700;box-shadow:0 8px 22px rgba(0,123,255,.22)}
+.site-header .exp-nav .btn.btn--primary.btn--sm:hover{filter:brightness(1.08);background:var(--grad);color:#fff}
+@media(max-width:640px){.site-header .header-inner{width:calc(100% - 28px)}.site-header .exp-nav{gap:8px}.site-header .exp-nav a:not(.btn){display:none}.site-header .exp-nav .btn.btn--primary.btn--sm{min-height:42px;padding:0 15px}}
+
 </style>
 </head>
 <body>
