@@ -1632,6 +1632,22 @@ document.querySelectorAll('.app-window').forEach(app=>{
  const expandIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M10 10 3 3m0 0h6M3 3v6M14 10l7-7m0 0h-6m6 0v6M10 14l-7 7m0 0h6m-6 0v-6m11-1 7 7m0 0h-6m6 0v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  const collapseIcon='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 3 10 10m0 0V4m-6 6h6M21 3l-7 7m0 0V4m0 6h6M3 21l7-7m0 0v6m-6-6h6m11 7-7-7m0 0v6m0-6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  let active=null,oldOverflow='';
+ const originalBackLabel=backLink?.innerHTML||'← <span>Voltar ao site</span>';
+ const originalBackAria=backLink?.getAttribute('aria-label')||'Voltar ao site principal';
+ const setBackMode=expanded=>{
+  if(!backLink)return;
+  if(expanded){
+   backLink.innerHTML='← <span>Voltar à demonstração</span>';
+   backLink.setAttribute('href','#demonstracoes');
+   backLink.setAttribute('aria-label','Sair da tela ampliada e voltar à demonstração');
+   backLink.title='Fechar a visualização ampliada e retornar à página de demonstrações';
+  }else{
+   backLink.innerHTML=originalBackLabel;
+   backLink.setAttribute('href','/');
+   backLink.setAttribute('aria-label',originalBackAria);
+   backLink.removeAttribute('title');
+  }
+ };
  const setLabel=(button,on)=>{
   button.innerHTML=(on?collapseIcon:expandIcon)+'<span>'+(on?'Reduzir':'Expandir')+'</span>';
   button.setAttribute('aria-label',on?'Reduzir demonstração':'Expandir demonstração no navegador');
@@ -1647,12 +1663,21 @@ document.querySelectorAll('.app-window').forEach(app=>{
  };
  const close=()=>{
   if(!active)return;
+  const buttonToFocus=active.button;
   restoreThemeButton();
   active.preview.classList.remove('preview-expanded');
   active.windowEl.classList.remove('demo-expanded');
   document.body.style.overflow=oldOverflow;
-  setLabel(active.button,false);active=null;
+  setLabel(active.button,false);
+  setBackMode(false);
+  active=null;
+  if(buttonToFocus?.isConnected)buttonToFocus.focus({preventScroll:true});
  };
+ backLink?.addEventListener('click',e=>{
+  if(!active)return;
+  e.preventDefault();
+  close();
+ });
  buttons.forEach(button=>{
   setLabel(button,false);
   button.addEventListener('click',()=>{
@@ -1670,6 +1695,7 @@ document.querySelectorAll('.app-window').forEach(app=>{
     active={preview,windowEl,button,themeButton,themePlaceholder};
    }else active={preview,windowEl,button};
    preview.classList.add('preview-expanded');windowEl.classList.add('demo-expanded');
+   setBackMode(true);
    setLabel(button,true);
   });
  });
