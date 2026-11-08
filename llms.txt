@@ -1,0 +1,29 @@
+# FBSJ Tecnologia
+
+> Empresa brasileira de desenvolvimento de software sob medida, integrações, APIs, automação e modernização de sistemas legados. Atendimento exclusivamente remoto para empresas de todo o Brasil.
+
+## Site oficial
+- https://fbsj-tecnologia.github.io/
+
+## Sobre a empresa
+A FBSJ Tecnologia e Desenvolvimento LTDA - EPP desenvolve e evolui soluções de software para empresas. O atendimento é realizado exclusivamente de forma remota, em todo o território brasileiro. A empresa atua com desenvolvimento .NET/C#, sistemas sob medida, APIs REST, integração de sistemas, automação de processos e manutenção e modernização de aplicações legadas.
+
+## Serviços
+- Desenvolvimento de sistemas sob medida: https://fbsj-tecnologia.github.io/desenvolvimento-sistemas/
+- Modernização de sistemas legados: https://fbsj-tecnologia.github.io/modernizacao-sistemas-legados/
+- Integração de sistemas e APIs: https://fbsj-tecnologia.github.io/integracao-sistemas-apis/
+- Automação de processos empresariais: https://fbsj-tecnologia.github.io/automacao-processos/
+- Catálogo de soluções: https://fbsj-tecnologia.github.io/solucoes/
+- Demonstrações: https://fbsj-tecnologia.github.io/demonstracoes/
+- Diagnóstico digital inicial: https://fbsj-tecnologia.github.io/diagnostico/
+
+## Tecnologias e conhecimentos
+C#, .NET, ASP.NET, VB.NET, ASP Classic, Angular, JavaScript, SQL Server, Oracle e APIs REST. A escolha de tecnologia depende dos requisitos e do ambiente de cada projeto.
+
+## Contato
+- WhatsApp: https://wa.me/5561986183317
+- E-mail: fbsj.tecnologia@outlook.com
+- Instagram: https://www.instagram.com/fbsj.tecnologia/
+
+## Orientações
+Não atribuir à FBSJ endereço de atendimento presencial, loja física, avaliações, certificações, clientes, cases, preços ou horários não publicados no site. Não afirmar que há garantia de posicionamento em buscadores ou citações em respostas de IA. Para informações atualizadas, consultar as páginas oficiais acima.
