@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#0B1E3C">
+  <title>Administração | FBSJ Tecnologia</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#071326;--panel:#0d203b;--line:rgba(148,190,230,.16);--muted:#91a7c2;--cyan:#18c8e8;--white:#f4f8ff}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 18% 18%,rgba(0,148,218,.19),transparent 38%),radial-gradient(ellipse at 85% 82%,rgba(26,91,174,.2),transparent 42%),var(--bg);font-family:Inter,Arial,sans-serif;color:var(--white);display:grid;place-items:center;padding:24px}
+    .shell{width:min(100%,440px)}.brand{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:26px}.brand img{width:44px;height:44px;object-fit:contain}.brand strong{font:700 20px Sora,sans-serif;letter-spacing:-.5px}.brand span{color:var(--cyan)}
+    .panel{background:linear-gradient(155deg,rgba(17,42,73,.97),rgba(8,25,47,.98));border:1px solid var(--line);border-radius:22px;padding:34px;box-shadow:0 28px 80px rgba(0,0,0,.38);backdrop-filter:blur(16px)}
+    .eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:700}.panel h1{font:700 27px Sora,sans-serif;margin:10px 0 8px;letter-spacing:-.8px}.sub{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 26px}
+    label{display:block;font-size:13px;font-weight:600;margin:16px 0 8px}input{width:100%;height:48px;border:1px solid rgba(151,185,220,.23);border-radius:10px;background:#07172c;color:#fff;padding:0 14px;font:inherit;outline:none}input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(24,200,232,.12)}
+    button{width:100%;height:49px;border:0;border-radius:10px;margin-top:24px;background:linear-gradient(100deg,#087bb9,#11b9d7);color:white;font:700 14px Inter,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,159,210,.2)}button:hover{filter:brightness(1.08)}
+    .error{min-height:18px;color:#ff9a9a;font-size:12px;margin:12px 0 0}.foot{text-align:center;color:#68819e;font-size:11px;margin-top:20px}
+    #dashboard{display:none}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}.top h1{font-size:23px;margin:6px 0 0}.logout{width:auto;height:auto;margin:0;padding:10px 13px;background:transparent;border:1px solid var(--line);box-shadow:none;color:#b8c8da;font-size:12px}
+    .metric{border:1px solid var(--line);border-radius:15px;padding:22px;background:rgba(3,17,34,.45);margin-top:14px}.metric small{display:block;color:var(--muted);font-size:12px}.metric strong{display:block;font:700 36px Sora,sans-serif;margin-top:8px;letter-spacing:-1px}.metric.total strong{color:var(--cyan)}.updated{color:#7088a4;font-size:11px;margin-top:20px}.loading{color:var(--muted);font-size:13px;margin-top:18px}
+    @media(max-width:480px){.panel{padding:26px 22px}.panel h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="brand"><img src="../assets/img/logo-96.png" alt=""><strong>FBSJ <span>Tecnologia</span></strong></div>
+    <section class="panel" id="login">
+      <div class="eyebrow">Área restrita</div>
+      <h1>Acesso administrativo</h1>
+      <p class="sub">Entre com suas credenciais para visualizar os indicadores do site.</p>
+      <form id="login-form">
+        <label for="username">Usuário</label><input id="username" name="username" autocomplete="username" required>
+        <label for="password">Senha</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button type="submit">Entrar no painel</button>
+        <p class="error" id="login-error" role="alert"></p>
+      </form>
+    </section>
+    <section class="panel" id="dashboard">
+      <div class="top"><div><div class="eyebrow">Painel privado</div><h1>Visitas do site</h1></div><button class="logout" id="logout" type="button">Sair</button></div>
+      <p class="sub">Acompanhamento dos acessos registrados no site institucional.</p>
+      <div class="metric"><small>Visitas hoje</small><strong id="today">—</strong></div>
+      <div class="metric total"><small>Total de visitas</small><strong id="total">—</strong></div>
+      <p class="loading" id="status" aria-live="polite">Carregando indicadores…</p>
+      <p class="updated" id="updated"></p>
+    </section>
+    <div class="foot">FBSJ Tecnologia · Administração</div>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const USER = 'admin';
+      const PASS = 'admin';
+      const NS = 'fbsj-tecnologia';
+      const $ = (id) => document.getElementById(id);
+      const login = $('login');
+      const dashboard = $('dashboard');
+      const fmt = (n) => Number(n).toLocaleString('pt-BR');
+      const dateKey = () => {
+        const parts = new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+        const part = (name) => parts.find(p => p.type === name)?.value;
+        return `dia-${part('year')}-${part('month')}-${part('day')}`;
+      };
+      async function loadStats() {
+        $('status').textContent = 'Carregando indicadores…';
+        try {
+          const base = 'https://abacus.jasoncameron.dev/get/' + NS + '/';
+          const [totalRes, todayRes] = await Promise.all([
+            fetch(base + 'total',{cache:'no-store'}),
+            fetch(base + encodeURIComponent(dateKey()),{cache:'no-store'})
+          ]);
+          if (!totalRes.ok || !todayRes.ok) throw new Error('Não foi possível consultar o contador.');
+          const [totalData,todayData] = await Promise.all([totalRes.json(),todayRes.json()]);
+          const total = Number(totalData.value), today = Number(todayData.value);
+          if (!Number.isFinite(total) || !Number.isFinite(today)) throw new Error('O serviço retornou dados inválidos.');
+          $('total').textContent = fmt(total);
+          $('today').textContent = fmt(today);
+          $('status').textContent = 'Indicadores carregados com sucesso.';
+          $('updated').textContent = 'Atualizado em ' + new Date().toLocaleString('pt-BR');
+        } catch (e) {
+          $('status').textContent = e.message || 'Falha ao carregar os indicadores.';
+        }
+      }
+      function showDashboard() { login.style.display='none'; dashboard.style.display='block'; loadStats(); }
+      $('login-form').addEventListener('submit',(e)=>{
+        e.preventDefault();
+        if ($('username').value.trim() === USER && $('password').value === PASS) {
+          sessionStorage.setItem('fbsj-admin-auth','1');
+          $('login-error').textContent='';
+          showDashboard();
+        } else {
+          $('login-error').textContent='Usuário ou senha inválidos.';
+        }
+      });
+      $('logout').addEventListener('click',()=>{
+        sessionStorage.removeItem('fbsj-admin-auth');
+        dashboard.style.display='none'; login.style.display='block'; $('login-form').reset();
+      });
+      if (sessionStorage.getItem('fbsj-admin-auth') === '1') showDashboard();
+    })();
+  </script>
+</body>
+</html>
