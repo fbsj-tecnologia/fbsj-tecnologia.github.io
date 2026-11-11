@@ -66,15 +66,21 @@
       async function loadStats() {
         $('status').textContent = 'Carregando indicadores…';
         try {
-          const base = 'https://abacus.jasoncameron.dev/get/' + NS + '/';
-          const [totalRes, todayRes] = await Promise.all([
-            fetch(base + 'total',{cache:'no-store'}),
-            fetch(base + encodeURIComponent(dateKey()),{cache:'no-store'})
+          const readCounter = async (key) => {
+            // A API não exige barra final. Uma chave ainda não criada equivale a zero.
+            const url = 'https://abacus.jasoncameron.dev/get/' + NS + '/' + encodeURIComponent(key);
+            const response = await fetch(url,{cache:'no-store'});
+            if (response.status === 404) return 0;
+            if (!response.ok) throw new Error('Serviço de visitas indisponível (HTTP ' + response.status + ').');
+            const data = await response.json();
+            const value = Number(data.value);
+            if (!Number.isFinite(value)) throw new Error('O serviço retornou dados inválidos.');
+            return value;
+          };
+          const [total,today] = await Promise.all([
+            readCounter('total'),
+            readCounter(dateKey())
           ]);
-          if (!totalRes.ok || !todayRes.ok) throw new Error('Não foi possível consultar o contador.');
-          const [totalData,todayData] = await Promise.all([totalRes.json(),todayRes.json()]);
-          const total = Number(totalData.value), today = Number(todayData.value);
-          if (!Number.isFinite(total) || !Number.isFinite(today)) throw new Error('O serviço retornou dados inválidos.');
           $('total').textContent = fmt(total);
           $('today').textContent = fmt(today);
           $('status').textContent = 'Indicadores carregados com sucesso.';
