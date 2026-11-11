@@ -282,7 +282,8 @@
 
     totalEl.textContent = total.toLocaleString('pt-BR');
     todayEl.textContent = today.toLocaleString('pt-BR');
-    display.hidden = false;
+    // Os números são reservados ao painel administrativo; nunca exibir no site público.
+    display.hidden = true;
   } catch (_) {
     // Falhas de rede, CORS, serviço ou bloqueadores: mantém o contador oculto.
   }
