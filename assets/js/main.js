@@ -5,7 +5,7 @@
 (() => {
   'use strict';
   const WHATSAPP = '5561986183317';
-  const EMAIL = 'fbsj.tecnologia@outlook.com';
+  const EMAIL = 'fbsj_tecnologia@outlook.com';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -170,7 +170,7 @@
   /* ---------- Formulário de contato ----------
      Envio: FormSubmit (https://formsubmit.co), serviço gratuito que encaminha
      o formulário para o e-mail da FBSJ. Na primeira mensagem o FormSubmit envia
-     um e-mail de ativação para fbsj.tecnologia@outlook.com — basta confirmar.
+     um e-mail de ativação para fbsj_tecnologia@outlook.com — basta confirmar.
      Alternativa sempre disponível: botão "Enviar pelo WhatsApp". */
   const form = $('#form-contato');
   if (form) {
