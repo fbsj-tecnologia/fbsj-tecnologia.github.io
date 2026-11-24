@@ -119,7 +119,7 @@
 
   /* ---------- Hero: rede de partículas (canvas leve) ---------- */
   const canvas = $('.hero__canvas');
-  if (canvas && !reduceMotion) {
+  if (canvas && !reduceMotion && innerWidth > 640) {
     const ctx = canvas.getContext('2d');
     let w, h, dpr, pts = [], raf = null, visible = true;
     const resize = () => {
