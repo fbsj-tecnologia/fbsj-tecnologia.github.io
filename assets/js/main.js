@@ -123,6 +123,7 @@
     const ctx = canvas.getContext('2d');
     let w, h, dpr, pts = [], raf = null, visible = true;
     const resize = () => {
+      if (innerWidth <= 640) { if (raf) cancelAnimationFrame(raf); raf = null; return; }
       dpr = Math.min(devicePixelRatio || 1, 2);
       w = canvas.clientWidth; h = canvas.clientHeight;
       canvas.width = w * dpr; canvas.height = h * dpr;
