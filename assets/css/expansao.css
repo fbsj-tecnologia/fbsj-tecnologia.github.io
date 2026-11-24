@@ -74,3 +74,6 @@
 @media(max-width:900px){.hero-ecosystem{max-width:620px;width:100%;min-height:0}.hero__inner{grid-template-columns:1fr}.ecosystem__diagram{grid-template-columns:minmax(100px,1fr) 26px minmax(145px,1.1fr) 26px minmax(110px,1fr);gap:7px}}
 @media(max-width:560px){.hero-ecosystem{padding:6px 0 22px}.ecosystem__topline{align-items:flex-start;flex-direction:column;margin-bottom:16px}.ecosystem__diagram{grid-template-columns:1fr;gap:9px}.ecosystem__sources{grid-template-columns:repeat(3,1fr);gap:7px}.ecosystem__node{padding:11px 8px;text-align:center}.ecosystem__node span{font-size:9px}.ecosystem__connector{display:flex;justify-content:center;gap:24px;transform:rotate(90deg);height:16px}.ecosystem__connector span{width:18px}.ecosystem__core{max-width:230px;width:100%;justify-self:center;padding:18px}.ecosystem__outcomes{grid-template-columns:1fr;gap:8px}.ecosystem__outcome{grid-template-columns:26px 1fr;padding:10px}.ecosystem__outcome>span{width:26px;height:26px}.ecosystem__foot{margin-top:14px}.ecosystem__foot span{font-size:9px;padding:7px 9px}}
 @media(prefers-reduced-motion:reduce){.ecosystem__connector span:after{box-shadow:none}}
+
+/* Desativa as partículas do hero em telas pequenas para priorizar desempenho */
+@media(max-width:640px){.home-page .hero__canvas{display:none!important}}
