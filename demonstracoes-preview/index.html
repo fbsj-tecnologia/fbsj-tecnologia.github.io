@@ -996,6 +996,25 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
  .app-window .workspace-modal-dialog{width:100%!important;max-height:calc(100% - 12px)!important}
 }
 
+
+/* Protótipos: ocultar a barra visual sem desativar a rolagem por toque/gesto */
+.preview,
+.preview *,
+.demo-panel .workspace-table-wrap,
+.demo-panel .workspace-modal-dialog,
+.demo-panel .app-content {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+.preview::-webkit-scrollbar,
+.preview *::-webkit-scrollbar,
+.demo-panel .workspace-table-wrap::-webkit-scrollbar,
+.demo-panel .workspace-modal-dialog::-webkit-scrollbar,
+.demo-panel .app-content::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
 </style>
 </head>
 <body>
