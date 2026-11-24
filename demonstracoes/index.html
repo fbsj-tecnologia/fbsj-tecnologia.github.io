@@ -1207,6 +1207,25 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 .site-header .exp-nav .btn.btn--primary.btn--sm:hover{filter:brightness(1.08);background:var(--grad);color:#fff}
 @media(max-width:640px){.site-header .header-inner{width:calc(100% - 28px)}.site-header .exp-nav{gap:8px}.site-header .exp-nav a:not(.btn){display:none}.site-header .exp-nav .btn.btn--primary.btn--sm{min-height:42px;padding:0 15px}}
 
+
+/* Protótipos: ocultar a barra visual sem desativar a rolagem por toque/gesto */
+.preview,
+.preview *,
+.demo-panel .workspace-table-wrap,
+.demo-panel .workspace-modal-dialog,
+.demo-panel .app-content {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+.preview::-webkit-scrollbar,
+.preview *::-webkit-scrollbar,
+.demo-panel .workspace-table-wrap::-webkit-scrollbar,
+.demo-panel .workspace-modal-dialog::-webkit-scrollbar,
+.demo-panel .app-content::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
 </style>
 </head>
 <body>
