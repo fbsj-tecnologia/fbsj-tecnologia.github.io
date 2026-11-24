@@ -4,6 +4,7 @@
    ========================================================= */
 (() => {
   'use strict';
+  document.documentElement.classList.remove('no-js');
   const WHATSAPP = '5561986183317';
   const EMAIL = 'fbsj.tecnologia@outlook.com.br';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -119,7 +120,7 @@
 
   /* ---------- Hero: rede de partículas (canvas leve) ---------- */
   const canvas = $('.hero__canvas');
-  if (canvas && !reduceMotion) {
+  if (canvas && !reduceMotion && !matchMedia('(max-width: 640px)').matches) {
     const ctx = canvas.getContext('2d');
     let w, h, dpr, pts = [], raf = null, visible = true;
     const resize = () => {
