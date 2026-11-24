@@ -157,7 +157,10 @@
       raf = visible ? requestAnimationFrame(draw) : null;
     };
     resize();
-    addEventListener('resize', resize);
+    addEventListener('resize', () => {
+      resize();
+      if (innerWidth > 640 && visible && !raf) raf = requestAnimationFrame(draw);
+    });
     new IntersectionObserver(([en]) => {
       visible = en.isIntersecting;
       if (visible && !raf) raf = requestAnimationFrame(draw);
