@@ -682,3 +682,98 @@ p { margin: 0 0 1em; }
 @media(prefers-reduced-motion:reduce){
   .home-page .fbsj-problem__card,.home-page .section--deep .card,.home-page .home-work__card,.home-page .hero__cta .btn{transition:none}
 }
+
+
+/* Refinamento CRO + identidade: hero editorial (referência visual 1) */
+.home-page .hero__inner{
+  grid-template-columns:minmax(390px,.78fr) minmax(560px,1.22fr);
+  gap:clamp(44px,5vw,88px);
+}
+.home-page .hero__copy{max-width:510px}
+.home-page .hero h1{
+  max-width:510px;
+  font-size:clamp(3.35rem,4.2vw,4.35rem);
+  line-height:1.035;
+  letter-spacing:-.068em;
+}
+.home-page .hero__sub{max-width:490px;line-height:1.68}
+.home-page .hero__cta{flex-direction:column;align-items:flex-start;gap:10px}
+.home-page .hero__cta .btn--primary{min-width:0;max-width:100%}
+.home-page .hero__cta .btn--light{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 18px;color:#e4efff;
+  border:1px solid rgba(128,177,237,.12);
+  border-radius:999px;background:rgba(255,255,255,.025);
+}
+.home-page .hero__cta .btn--light:after{content:"→";color:#00c9ef;font-size:17px}
+.home-page .hero__tags{margin-top:16px}
+.home-page .hero__art.hero-ecosystem{max-width:700px}
+.home-page .home-work__grid{align-items:stretch}
+.home-page .home-work__card{
+  position:relative;display:flex;flex-direction:column;
+  min-height:310px;padding:clamp(22px,2.4vw,32px);
+  border:1px solid #dce7f4;background:#fff;
+}
+.home-page .home-work__card--featured{
+  background:linear-gradient(145deg,#0b2040,#07152b);
+  border-color:rgba(0,201,239,.28);
+  box-shadow:0 20px 48px rgba(7,27,55,.16);
+}
+.home-page .home-work__card--featured h3{color:#f3f8ff}
+.home-page .home-work__card--featured p{color:#b7cbe4}
+.home-page .home-work__card--featured small{color:#8fa9c9}
+.home-page .home-work__card .badge{
+  align-self:flex-start;margin-bottom:18px;
+  font-size:11px;line-height:1.4;
+}
+.home-page .home-work__card h3{
+  font-size:clamp(1.25rem,1.8vw,1.65rem);
+  letter-spacing:-.04em;line-height:1.2;
+}
+.home-page .home-work__card p{color:#526681;line-height:1.7}
+.home-page .home-work__card small{display:block;color:#72839b;font-size:12px;line-height:1.55;margin-top:auto;padding-top:12px}
+.home-page .home-work__link{
+  display:inline-flex;align-items:center;justify-content:space-between;gap:14px;
+  margin-top:22px;padding-top:16px;border-top:1px solid #e5edf7;
+  color:#0878d5;text-decoration:none;font-size:14px;font-weight:750;
+}
+.home-page .home-work__link b{font-size:18px;transition:transform .2s ease}
+.home-page .home-work__link:hover b{transform:translate(3px,-2px)}
+.home-page .home-work__card--featured .home-work__link{
+  color:#65e2ff;border-color:rgba(129,183,244,.18)
+}
+.home-page .home-work__card--featured .badge{
+  background:rgba(0,201,239,.1);border-color:rgba(0,201,239,.24);color:#8ceaff
+}
+.home-page .section__head .btn{margin-top:8px}
+.home-page .section__head .btn--primary{
+  border-radius:999px;box-shadow:0 12px 28px rgba(0,123,255,.22)
+}
+.home-page .fbsj-problem__foot{
+  margin-top:34px;padding-top:24px;border-top:1px solid #dce7f4
+}
+.home-page .fbsj-problem__foot p{font-weight:650;color:#526681}
+.home-page .section--deep .card__link{color:#58dfff}
+.home-page .home-contact .contact__info h2{max-width:640px}
+.home-page .home-contact .contact__info .lead{max-width:640px}
+@media(min-width:1280px){
+  .home-page .hero{padding-top:calc(var(--nav-h) + 12px);padding-bottom:44px}
+  .home-page .hero__inner{min-height:600px}
+}
+@media(min-width:901px) and (max-width:1279px){
+  .home-page .hero__inner{grid-template-columns:minmax(350px,.88fr) minmax(0,1.12fr);gap:32px}
+  .home-page .hero h1{font-size:clamp(3rem,4.1vw,3.65rem)}
+}
+@media(max-width:900px){
+  .home-page .hero__inner{grid-template-columns:1fr;gap:28px}
+  .home-page .hero__copy{max-width:720px}
+  .home-page .hero h1{max-width:680px;font-size:clamp(2.75rem,7vw,4rem)}
+  .home-page .hero__cta{flex-direction:row;flex-wrap:wrap;align-items:center}
+}
+@media(max-width:640px){
+  .home-page .hero__inner{gap:22px}
+  .home-page .hero h1{font-size:clamp(2.35rem,9vw,3.15rem);max-width:100%}
+  .home-page .hero__cta{display:grid;grid-template-columns:1fr;align-items:stretch}
+  .home-page .hero__cta .btn--light{justify-content:center}
+  .home-page .home-work__card{min-height:0}
+}
