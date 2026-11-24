@@ -476,3 +476,6 @@ p { margin: 0 0 1em; }
   .nav__cta{margin:18px 0 0}
   body.menu-open{overflow:hidden}
 }
+
+.hero__btn-primary{background:#0068b7;color:#fff;box-shadow:0 10px 28px rgba(0,104,183,.35)}
+.hero__btn-primary:hover{background:#005a9e;box-shadow:0 15px 34px rgba(0,90,158,.42)}
