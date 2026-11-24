@@ -1278,6 +1278,9 @@ body.menu-open:after{content:"";position:fixed;inset:0;background:#02091688;z-in
 const tabs=[...document.querySelectorAll('[data-tab]')];
 function activate(name){tabs.forEach(t=>{let on=t.dataset.tab===name;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;document.getElementById('panel-'+t.dataset.tab).classList.toggle('active',on)})}
 tabs.forEach((t,i)=>{t.addEventListener('click',()=>activate(t.dataset.tab));t.addEventListener('keydown',e=>{if(['ArrowRight','ArrowLeft'].includes(e.key)){e.preventDefault();let n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;tabs[n].focus();activate(tabs[n].dataset.tab)}})});
+const requestedDemo=new URLSearchParams(location.search).get('demo');
+if(requestedDemo&&tabs.some(t=>t.dataset.tab===requestedDemo))activate(requestedDemo);
+
 document.querySelectorAll('.app-window').forEach(app=>{
  const toggle=app.querySelector('.prototype-theme-toggle');
  if(!toggle)return;
