@@ -77,3 +77,7 @@
 
 /* Desativa as partículas do hero em telas pequenas para priorizar desempenho */
 @media(max-width:640px){.home-page .hero__canvas{display:none!important}}
+
+/* Dados legais em rodapés de páginas internas */
+.exp-footer .container{flex-wrap:wrap}
+.exp-footer__legal{flex:1 0 100%;display:block;text-align:center;color:#a9bdd7;font-size:11px;line-height:1.5;padding-top:8px}
